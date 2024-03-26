@@ -1,4 +1,4 @@
-package user.dto;
+package com.nhnacademy.account.user.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginResponseDto {
+public class Member {
+
     private String id;
     private String pw;
+
 }

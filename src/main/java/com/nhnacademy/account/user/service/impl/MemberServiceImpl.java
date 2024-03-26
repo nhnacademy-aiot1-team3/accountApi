@@ -1,12 +1,11 @@
-package user.service.impl;
+package com.nhnacademy.account.user.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import user.dto.LoginRequestDto;
-import user.dto.LoginResponseDto;
-import user.entity.Member;
-import user.repository.MemberRepository;
-import user.service.MemberService;
+import com.nhnacademy.account.user.dto.LoginRequestDto;
+import com.nhnacademy.account.user.entity.Member;
+import com.nhnacademy.account.user.repository.MemberRepository;
+import com.nhnacademy.account.user.service.MemberService;
 
 @Service
 @RequiredArgsConstructor
