@@ -1,11 +1,13 @@
 package com.nhnacademy.account.user.service.impl;
 
+import com.nhnacademy.account.user.dto.LoginResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.nhnacademy.account.user.dto.LoginRequestDto;
 import com.nhnacademy.account.user.entity.Member;
 import com.nhnacademy.account.user.repository.MemberRepository;
 import com.nhnacademy.account.user.service.MemberService;
+
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -14,8 +16,14 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
     @Override
-    public Member getMemberIdAndPassword(LoginRequestDto loginRequestDto) {
+    public LoginResponseDto getMemberIdAndPassword(String id) {
 
-        return new Member("admin","1234");
+        Member member = memberRepository.findById(id).orElse(null);
+
+        if (Objects.isNull(member)) {
+            return new LoginResponseDto("","");
+        }
+
+        return new LoginResponseDto(member.getId(), member.getPw());
     }
 }
