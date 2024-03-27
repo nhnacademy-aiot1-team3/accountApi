@@ -1,5 +1,6 @@
 package com.nhnacademy.account.user.entity;
 
+import com.nhnacademy.account.user.dto.JoinResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,4 +25,15 @@ public class Member {
     @Column(name = "member_password")
     private String pw;
 
+
+    public static Member createMember(String id, String pw) {
+        return new Member(id, pw);
+    }
+
+    public JoinResponseDto toDto() {
+        return JoinResponseDto.builder()
+                .id(id)
+                .password(pw)
+                .build();
+    }
 }
