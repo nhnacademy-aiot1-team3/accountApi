@@ -7,5 +7,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8090/member/login/test1
+GET http://localhost:8090/member/login/admin
 Accept: application/json
+
+###

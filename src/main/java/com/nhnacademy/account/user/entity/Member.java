@@ -18,6 +18,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @Table(name = "Members")
 public class Member {
+
     @Id
     @Column(name = "member_id")
     private String id;

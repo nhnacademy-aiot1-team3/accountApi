@@ -1,5 +1,6 @@
 package com.nhnacademy.account.user.service.impl;
 
+
 import com.nhnacademy.account.user.dto.JoinRequestDto;
 import com.nhnacademy.account.user.dto.JoinResponseDto;
 import com.nhnacademy.account.user.dto.LoginResponseDto;
@@ -19,6 +20,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public LoginResponseDto getMemberIdAndPassword(String id) {
+      
         Member member = memberRepository.findById(id).orElse(null);
 
         if (Objects.isNull(member)) {
@@ -30,11 +32,14 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public JoinResponseDto createMember(JoinRequestDto request) {
+      
         Member member = Member.createMember(request.getId(), request.getPassword());
+      
         if (memberRepository.findById(request.getId()).isPresent()) {
             throw new IllegalStateException("already exist " + member.getId());
         }
 
         return memberRepository.save(member).toDto();
+
     }
 }
