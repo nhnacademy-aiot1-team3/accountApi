@@ -1,2 +1,11 @@
-GET http://localhost:8090/member/login/admin
+POST http://localhost:8090/member/login
+Content-Type: application/json
+
+{
+  "id": "test1",
+  "password": "1234"
+}
+
+###
+GET http://localhost:8090/member/login/test1
 Accept: application/json
