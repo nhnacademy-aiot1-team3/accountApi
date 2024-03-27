@@ -3,9 +3,7 @@ package com.nhnacademy.account.user.controller;
 
 import com.nhnacademy.account.user.dto.JoinRequestDto;
 import com.nhnacademy.account.user.dto.JoinResponseDto;
-import com.nhnacademy.account.user.dto.LoginRequestDto;
 import com.nhnacademy.account.user.dto.LoginResponseDto;
-import com.nhnacademy.account.user.entity.Member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +17,6 @@ import com.nhnacademy.account.user.service.MemberService;
 @RestController
 @RequestMapping("/member/login")
 @RequiredArgsConstructor
-@Slf4j
 public class MemberController {
 
     private final MemberService memberService;
