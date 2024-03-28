@@ -3,7 +3,7 @@ package com.nhnacademy.account.user.service.impl;
 
 import com.nhnacademy.account.user.dto.JoinRequestDto;
 import com.nhnacademy.account.user.dto.JoinResponseDto;
-import com.nhnacademy.account.user.dto.LoginResponseDto;
+import com.nhnacademy.account.user.dto.LoginInfoResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.nhnacademy.account.user.entity.Member;
@@ -19,15 +19,15 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
     @Override
-    public LoginResponseDto getMemberIdAndPassword(String id) {
+    public LoginInfoResponseDto getMemberIdAndPassword(String id) {
       
         Member member = memberRepository.findById(id).orElse(null);
 
         if (Objects.isNull(member)) {
-            return new LoginResponseDto("", "");
+            return new LoginInfoResponseDto("", "");
         }
 
-        return new LoginResponseDto(member.getId(), member.getPw());
+        return new LoginInfoResponseDto(member.getId(), member.getPw());
     }
 
     @Override
