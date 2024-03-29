@@ -23,8 +23,9 @@ public class MemberServiceImpl implements MemberService {
       
         Member member = memberRepository.findById(id).orElse(null);
 
+        //null 로 변경
         if (Objects.isNull(member)) {
-            return new LoginInfoResponseDto("", "");
+            return null;
         }
 
         return new LoginInfoResponseDto(member.getId(), member.getPw());
