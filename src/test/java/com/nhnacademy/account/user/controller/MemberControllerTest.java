@@ -1,5 +1,7 @@
 package com.nhnacademy.account.user.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nhnacademy.account.user.dto.JoinResponseDto;
 import com.nhnacademy.account.user.dto.LoginInfoResponseDto;
 import com.nhnacademy.account.user.service.MemberService;
 import org.junit.jupiter.api.Test;
@@ -12,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(MemberController.class)
@@ -40,7 +43,22 @@ class MemberControllerTest {
     }
 
     @Test
-    void createMember() {
+    void createMember() throws Exception {
+        String testId = "memeber1";
+        String testPw = "123456";
+
+        JoinResponseDto response = new JoinResponseDto(testId, testPw);
+
+        given(memberService.createMember(any())).willReturn(response);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        mockMvc.perform(post("/api/account/member").content(objectMapper.writeValueAsString(response)).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(testId))
+                .andExpect(jsonPath("$.password").value(testPw));
+
     }
 
 }
