@@ -15,7 +15,7 @@ import com.nhnacademy.account.user.service.MemberService;
 
 @Slf4j
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/api/account/member")
 @RequiredArgsConstructor
 public class MemberController {
 
