@@ -1,0 +1,46 @@
+package com.nhnacademy.account.user.controller;
+
+import com.nhnacademy.account.user.dto.LoginInfoResponseDto;
+import com.nhnacademy.account.user.service.MemberService;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@WebMvcTest(MemberController.class)
+class MemberControllerTest {
+
+    @Autowired
+    MockMvc mockMvc;
+
+    @MockBean
+    MemberService memberService;
+
+    @Test
+    void getMember() throws Exception {
+
+        String testId = "testId";
+        String testPw = "testPw";
+        LoginInfoResponseDto response = new LoginInfoResponseDto(testId, testPw);
+
+        given(memberService.getMemberIdAndPassword(any())).willReturn(response);
+
+        mockMvc.perform(get("/api/account/member/{memberId}", testId))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").value(testId))
+                .andExpect(jsonPath("$.password").value(testPw));
+    }
+
+    @Test
+    void createMember() {
+    }
+
+}
