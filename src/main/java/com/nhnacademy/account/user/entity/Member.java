@@ -24,16 +24,18 @@ public class Member {
     private String id;
     @Column(name = "member_password")
     private String pw;
+    @Column(name = "member_email")
+    private String email;
 
-
-    public static Member createMember(String id, String pw) {
-        return new Member(id, pw);
+    public static Member createMember(String id, String pw, String email) {
+        return new Member(id, pw, email);
     }
 
     public JoinResponseDto toDto() {
         return JoinResponseDto.builder()
                 .id(id)
                 .password(pw)
+                .email(email)
                 .build();
     }
 }

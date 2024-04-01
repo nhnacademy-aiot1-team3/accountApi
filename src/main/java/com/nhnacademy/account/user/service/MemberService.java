@@ -9,5 +9,7 @@ public interface MemberService {
 
     LoginInfoResponseDto getMemberIdAndPassword(String id);
 
+    Boolean isExistByMemberEmail(String email);
+
     JoinResponseDto createMember(JoinRequestDto request);
 }

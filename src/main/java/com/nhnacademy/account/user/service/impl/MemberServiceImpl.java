@@ -32,9 +32,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Boolean isExistByMemberEmail(String email) {
+        return memberRepository.existsByEmail(email);
+    }
+
+    @Override
     public JoinResponseDto createMember(JoinRequestDto request) {
       
-        Member member = Member.createMember(request.getId(), request.getPassword());
+        Member member = Member.createMember(request.getId(), request.getPassword(), request.getEmail());
       
         if (memberRepository.findById(request.getId()).isPresent()) {
             throw new IllegalStateException("already exist " + member.getId());

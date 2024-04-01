@@ -15,7 +15,7 @@ import com.nhnacademy.account.user.service.MemberService;
 
 @Slf4j
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/api/account/member")
 @RequiredArgsConstructor
 public class MemberController {
 
@@ -26,6 +26,12 @@ public class MemberController {
         log.info("{}", "here");
         return ResponseEntity.status(HttpStatus.OK).body(memberService.getMemberIdAndPassword(memberId));
     }
+
+    @GetMapping("/email/{memberEmail}")
+    public ResponseEntity<Boolean> getMemberEmail(@PathVariable("memberEmail")String memberEmail) {
+        return ResponseEntity.status(HttpStatus.OK).body(memberService.isExistByMemberEmail(memberEmail));
+    }
+
 
     @PostMapping
     public ResponseEntity<JoinResponseDto> createMember(@RequestBody JoinRequestDto requestDto) {
