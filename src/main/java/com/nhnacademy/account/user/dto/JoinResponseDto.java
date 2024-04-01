@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class JoinResponseDto {
     private String id;
     private String password;
+    private String email;
 }
