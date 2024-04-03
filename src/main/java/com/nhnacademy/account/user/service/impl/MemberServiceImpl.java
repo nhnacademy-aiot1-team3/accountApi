@@ -5,7 +5,6 @@ import com.nhnacademy.account.user.dto.JoinRequestDto;
 import com.nhnacademy.account.user.dto.JoinResponseDto;
 import com.nhnacademy.account.user.dto.LoginInfoResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.nhnacademy.account.user.entity.Member;
 import com.nhnacademy.account.user.repository.MemberRepository;
@@ -18,7 +17,6 @@ import java.util.Objects;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @Override
     public LoginInfoResponseDto getMemberIdAndPassword(String id) {
@@ -34,9 +32,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public Boolean isExistByMemberEmail(String email) {
+        return memberRepository.existsByEmail(email);
+    }
+
+    @Override
     public JoinResponseDto createMember(JoinRequestDto request) {
       
-        Member member = Member.createMember(request.getId(), passwordEncoder.encode(request.getPassword()));
+        Member member = Member.createMember(request.getId(), request.getPassword(), request.getEmail());
       
         if (memberRepository.findById(request.getId()).isPresent()) {
             throw new IllegalStateException("already exist " + member.getId());

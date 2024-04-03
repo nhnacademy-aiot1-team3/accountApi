@@ -27,6 +27,12 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK).body(memberService.getMemberIdAndPassword(memberId));
     }
 
+    @GetMapping("/email/{memberEmail}")
+    public ResponseEntity<Boolean> getMemberEmail(@PathVariable("memberEmail")String memberEmail) {
+        return ResponseEntity.status(HttpStatus.OK).body(memberService.isExistByMemberEmail(memberEmail));
+    }
+
+
     @PostMapping
     public ResponseEntity<JoinResponseDto> createMember(@RequestBody JoinRequestDto requestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(memberService.createMember(requestDto));
