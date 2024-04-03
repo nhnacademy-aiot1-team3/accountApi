@@ -1,6 +1,6 @@
-package com.nhnacademy.account.user.entity;
+package live.databo3.account.user.entity;
 
-import com.nhnacademy.account.user.dto.JoinResponseDto;
+import live.databo3.account.user.dto.JoinResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +11,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Member Entity
+ * @author insub
+ * @version 1.0.0
+ */
 @Entity
 @Getter
 @Setter
@@ -27,6 +32,13 @@ public class Member {
     @Column(name = "member_email")
     private String email;
 
+    /**
+     * Member 객체를 생성하는 메서드
+     * @param id Member의 id
+     * @param pw Member의 password
+     * @param email Member의 email
+     * @return Member
+     */
     public static Member createMember(String id, String pw, String email) {
         return new Member(id, pw, email);
     }
