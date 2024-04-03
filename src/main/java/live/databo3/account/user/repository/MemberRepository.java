@@ -1,6 +1,6 @@
-package com.nhnacademy.account.user.repository;
+package live.databo3.account.user.repository;
 
-import com.nhnacademy.account.user.entity.Member;
+import live.databo3.account.user.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

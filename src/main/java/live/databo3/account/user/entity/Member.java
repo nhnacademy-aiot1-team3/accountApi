@@ -1,6 +1,6 @@
-package com.nhnacademy.account.user.entity;
+package live.databo3.account.user.entity;
 
-import com.nhnacademy.account.user.dto.JoinResponseDto;
+import live.databo3.account.user.dto.JoinResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

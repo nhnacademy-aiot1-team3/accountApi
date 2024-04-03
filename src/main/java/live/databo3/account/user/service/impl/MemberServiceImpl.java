@@ -1,15 +1,15 @@
-package com.nhnacademy.account.user.service.impl;
+package live.databo3.account.user.service.impl;
 
 
-import com.nhnacademy.account.user.dto.JoinRequestDto;
-import com.nhnacademy.account.user.dto.JoinResponseDto;
-import com.nhnacademy.account.user.dto.LoginInfoResponseDto;
+import live.databo3.account.user.dto.JoinRequestDto;
+import live.databo3.account.user.dto.JoinResponseDto;
+import live.databo3.account.user.dto.LoginInfoResponseDto;
+import live.databo3.account.user.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.nhnacademy.account.user.entity.Member;
-import com.nhnacademy.account.user.repository.MemberRepository;
-import com.nhnacademy.account.user.service.MemberService;
+import live.databo3.account.user.repository.MemberRepository;
+import live.databo3.account.user.service.MemberService;
 
 import java.util.Objects;
 

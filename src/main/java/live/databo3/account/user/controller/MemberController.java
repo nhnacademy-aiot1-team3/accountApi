@@ -1,16 +1,16 @@
-package com.nhnacademy.account.user.controller;
+package live.databo3.account.user.controller;
 
 
-import com.nhnacademy.account.user.dto.JoinRequestDto;
-import com.nhnacademy.account.user.dto.JoinResponseDto;
-import com.nhnacademy.account.user.dto.LoginInfoResponseDto;
+import live.databo3.account.user.dto.JoinRequestDto;
+import live.databo3.account.user.dto.JoinResponseDto;
+import live.databo3.account.user.dto.LoginInfoResponseDto;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.nhnacademy.account.user.service.MemberService;
+import live.databo3.account.user.service.MemberService;
 
 /**
  * account-api로 들어오는 Member 관련 요청들을 처리하는 Controller

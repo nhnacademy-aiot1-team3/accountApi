@@ -1,4 +1,4 @@
-package com.nhnacademy.account.user.dto;
+package live.databo3.account.user.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,11 +1,11 @@
-package com.nhnacademy.account.user.service;
+package live.databo3.account.user.service;
 
-import com.nhnacademy.account.user.dto.JoinRequestDto;
-import com.nhnacademy.account.user.dto.JoinResponseDto;
-import com.nhnacademy.account.user.dto.LoginInfoResponseDto;
-import com.nhnacademy.account.user.entity.Member;
-import com.nhnacademy.account.user.repository.MemberRepository;
-import com.nhnacademy.account.user.service.impl.MemberServiceImpl;
+import live.databo3.account.user.dto.JoinRequestDto;
+import live.databo3.account.user.dto.JoinResponseDto;
+import live.databo3.account.user.dto.LoginInfoResponseDto;
+import live.databo3.account.user.entity.Member;
+import live.databo3.account.user.repository.MemberRepository;
+import live.databo3.account.user.service.impl.MemberServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

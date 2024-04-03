@@ -1,9 +1,9 @@
-package com.nhnacademy.account.user.service;
+package live.databo3.account.user.service;
 
 
-import com.nhnacademy.account.user.dto.JoinRequestDto;
-import com.nhnacademy.account.user.dto.JoinResponseDto;
-import com.nhnacademy.account.user.dto.LoginInfoResponseDto;
+import live.databo3.account.user.dto.JoinRequestDto;
+import live.databo3.account.user.dto.JoinResponseDto;
+import live.databo3.account.user.dto.LoginInfoResponseDto;
 
 /**
  * 멤버와 관련된 요청 처리하는 Service interface

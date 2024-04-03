@@ -1,4 +1,4 @@
-package com.nhnacademy.account;
+package live.databo3.account;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
