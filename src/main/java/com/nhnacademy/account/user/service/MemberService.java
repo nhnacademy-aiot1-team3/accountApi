@@ -11,5 +11,5 @@ public interface MemberService {
 
     Boolean isExistByMemberEmail(String email);
 
-    JoinResponseDto createMember(JoinRequestDto request);
+    JoinResponseDto registerMember(JoinRequestDto request);
 }

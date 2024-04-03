@@ -38,8 +38,15 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.existsByEmail(email);
     }
 
+    /**
+     * Member를 create하는 메서드, findById 메서드를 통해 member가 있는지 확인하고
+     * 있으면 IllegalStateException을 던짐
+     * @param request JoinResquestDto
+     * @return member를 save하고 toDto 메서드를 활용해 JoinResponseDto로 변환 후 리턴
+     * @since 1.0.0
+      */
     @Override
-    public JoinResponseDto createMember(JoinRequestDto request) {
+    public JoinResponseDto registerMember(JoinRequestDto request) {
       
         Member member = Member.createMember(request.getId(), passwordEncoder.encode(request.getPassword()), request.getEmail());
       

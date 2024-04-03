@@ -31,6 +31,11 @@ public class Member {
         return new Member(id, pw, email);
     }
 
+    /**
+     * JoinResponseDto로 만들어주는 메소드
+     * @return builder로 id, password, email을 반환
+     * @since 1.0.0
+     */
     public JoinResponseDto toDto() {
         return JoinResponseDto.builder()
                 .id(id)
