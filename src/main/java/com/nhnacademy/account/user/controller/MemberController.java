@@ -32,9 +32,14 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.OK).body(memberService.isExistByMemberEmail(memberEmail));
     }
 
-
+    /**
+     * Member를 create하는 메소드
+     * @param requestDto ResponseEntity<JoinResponseDto>를 구성하는데 필요한 requestDto 파라미터
+     * @return ResponseEntity
+     * @since 1.0.0
+     */
     @PostMapping
     public ResponseEntity<JoinResponseDto> createMember(@RequestBody JoinRequestDto requestDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(memberService.createMember(requestDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(memberService.registerMember(requestDto));
     }
 }
