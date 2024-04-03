@@ -1,13 +1,15 @@
-POST http://localhost:8090/member/login
+POST http://localhost:8090/api/account/member
 Content-Type: application/json
 
 {
   "id": "test1",
-  "password": "1234"
+  "password": "1234",
+  "email" : "test@test.com"
 }
 
 ###
-GET http://localhost:8090/member/login/admin
+GET http://localhost:8090/api/account/member/test1
 Accept: application/json
 
 ###
+GET http://localhost:8090/api/account/member/email/test@test
