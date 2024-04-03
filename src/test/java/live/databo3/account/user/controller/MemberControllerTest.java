@@ -54,7 +54,7 @@ class MemberControllerTest {
 
         ObjectMapper objectMapper = new ObjectMapper();
 
-        mockMvc.perform(post("/api/account/member").content(objectMapper.writeValueAsString(response)).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(post("/api/account/member/register").content(objectMapper.writeValueAsString(response)).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(testId))
