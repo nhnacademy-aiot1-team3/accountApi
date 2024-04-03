@@ -54,7 +54,7 @@ public class MemberController {
      * @return ResponseEntity 생성 성공한 Member dto
      * @since 1.0.0
      */
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<JoinResponseDto> createMember(@RequestBody JoinRequestDto requestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(memberService.registerMember(requestDto));
     }
