@@ -50,7 +50,7 @@ class MemberControllerTest {
 
         JoinResponseDto response = new JoinResponseDto(testId, testPw, testEmail);
 
-        given(memberService.createMember(any())).willReturn(response);
+        given(memberService.registerMember(any())).willReturn(response);
 
         ObjectMapper objectMapper = new ObjectMapper();
 
