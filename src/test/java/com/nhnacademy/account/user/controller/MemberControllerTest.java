@@ -46,8 +46,9 @@ class MemberControllerTest {
     void createMember() throws Exception {
         String testId = "memeber1";
         String testPw = "123456";
+        String testEmail = "test@test.live";
 
-        JoinResponseDto response = new JoinResponseDto(testId, testPw);
+        JoinResponseDto response = new JoinResponseDto(testId, testPw, testEmail);
 
         given(memberService.createMember(any())).willReturn(response);
 
@@ -57,7 +58,8 @@ class MemberControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(testId))
-                .andExpect(jsonPath("$.password").value(testPw));
+                .andExpect(jsonPath("$.password").value(testPw))
+                .andExpect(jsonPath("$.email").value(testEmail));
 
     }
 
