@@ -82,7 +82,7 @@ class MemberServiceTest {
 
         given(memberRepository.save(any())).willReturn(member);
 
-        JoinResponseDto joinResponseDto = memberService.createMember(joinRequestDto);
+        JoinResponseDto joinResponseDto = memberService.registerMember(joinRequestDto);
 
         Assertions.assertThat(joinResponseDto.getId()).isEqualTo(member.getId());
         Assertions.assertThat(joinResponseDto.getPassword()).isEqualTo(member.getPw());
