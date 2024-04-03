@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.lang.reflect.Field;
 import java.util.Optional;
@@ -23,6 +24,8 @@ class MemberServiceTest {
 
     @Mock
     MemberRepository memberRepository;
+    @Mock
+    PasswordEncoder  passwordEncoder;
 
     @InjectMocks
     private MemberServiceImpl memberService;
