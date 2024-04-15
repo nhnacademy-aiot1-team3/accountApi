@@ -5,16 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * Member Entity
  * @author insub
- * @version 1.0.0
+ * @version 1.0.1
  */
 @Entity
 @Getter
@@ -25,12 +24,25 @@ import javax.persistence.Table;
 public class Member {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_number")
+    private Long memberNumber;
     @Column(name = "member_id")
-    private String id;
+    private String memberId;
     @Column(name = "member_password")
-    private String pw;
+    private String memberPassword;
     @Column(name = "member_email")
-    private String email;
+    private String memberEmail;
+    @Column(name = "last_login_date_time")
+    private LocalDateTime lastLoginDateTime;
+
+    @ManyToOne
+    @JoinColumn(name="role_id")
+    private Roles roles;
+
+    @ManyToOne
+    @JoinColumn(name="state_id")
+    private States states;
 
     /**
      * Member 객체를 생성하는 메서드
@@ -39,8 +51,8 @@ public class Member {
      * @param email Member의 email
      * @return Member
      */
-    public static Member createMember(String id, String pw, String email) {
-        return new Member(id, pw, email);
+    public static Member createMember(String id, String pw, String email, Roles roles, States states) {
+        return new Member(null,id, pw, email, null, roles, states);
     }
 
     /**
@@ -50,9 +62,9 @@ public class Member {
      */
     public JoinResponseDto toDto() {
         return JoinResponseDto.builder()
-                .id(id)
-                .password(pw)
-                .email(email)
+                .id(memberId)
+                .password(memberPassword)
+                .email(memberEmail)
                 .build();
     }
 }

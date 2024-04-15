@@ -3,6 +3,8 @@ package live.databo3.account.user.repository;
 import live.databo3.account.user.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 /**
  * Member JpaRepository interface
  * @author insub
@@ -15,6 +17,13 @@ public interface MemberRepository extends JpaRepository<Member, String> {
      * @param email Member의 email
      * @return true or false
      */
-    Boolean existsByEmail(String email);
+    Boolean existsByMemberEmail(String email);
+
+    /**
+     * 데이터베이스에 요청받은 Id 조회하는 메서드
+     * @param requestId Request 받은 ID
+     * @return Optional<Member>
+     */
+    Optional<Member> findByMemberId(String requestId);
 
 }

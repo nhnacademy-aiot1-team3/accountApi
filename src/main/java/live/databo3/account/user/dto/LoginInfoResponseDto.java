@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginInfoResponseDto {
-    private String memberNumber;
+    private Long memberNumber;
     private String memberId;
     private String memberPassword;
     private String memberEmail;

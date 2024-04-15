@@ -21,23 +21,23 @@ class MemberRepositoryTest {
     @DisplayName("멤버가 DB에 저장이 잘 되는지 확인")
     void testSaveMember() {
         Member member = new Member();
-        member.setId("member");
-        member.setPw("1234");
-        member.setEmail("hello@gmail.com");
+        member.setMemberId("member");
+        member.setMemberPassword("1234");
+        member.setMemberEmail("hello@gmail.com");
 
         memberRepository.save(member);
 
         Optional<Member> savedMember = memberRepository.findById("member");
 
-        assertThat(savedMember.get().getId().equals("member"));
+        assertThat(savedMember.get().getMemberId().equals("member"));
     }
     @Test
     @DisplayName("email이 있는지 확인")
     void testExistsByEmail() {
-        Member member = new Member("hello", "45667", "myname@gmail.com");
+        Member member = Member.createMember("hello", "45667", "myname@gmail.com",null,null);
 
         memberRepository.save(member);
 
-        assertThat(memberRepository.existsByEmail("myname@gmail.com")).isTrue();
+        assertThat(memberRepository.existsByMemberEmail("myname@gmail.com")).isTrue();
     }
 }
