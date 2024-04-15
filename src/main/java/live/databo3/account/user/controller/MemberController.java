@@ -33,7 +33,7 @@ public class MemberController {
      */
     @GetMapping("/{memberId}")
     public ResponseEntity<LoginInfoResponseDto> getMember(@PathVariable("memberId")String memberId){
-        log.info("{}", "here");
+        log.info("멤버 조회 : {}", memberId);
         return ResponseEntity.status(HttpStatus.OK).body(memberService.getMemberIdAndPassword(memberId));
     }
 

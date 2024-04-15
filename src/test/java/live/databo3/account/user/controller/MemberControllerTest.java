@@ -31,15 +31,15 @@ class MemberControllerTest {
 
         String testId = "testId";
         String testPw = "testPw";
-        LoginInfoResponseDto response = new LoginInfoResponseDto(testId, testPw);
+        LoginInfoResponseDto response = new LoginInfoResponseDto(1L, testId, testPw, null, null, null,null);
 
         given(memberService.getMemberIdAndPassword(any())).willReturn(response);
 
         mockMvc.perform(get("/api/account/member/{memberId}", testId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(testId))
-                .andExpect(jsonPath("$.password").value(testPw));
+                .andExpect(jsonPath("$.memberId").value(testId))
+                .andExpect(jsonPath("$.memberPassword").value(testPw));
     }
 
     @Test

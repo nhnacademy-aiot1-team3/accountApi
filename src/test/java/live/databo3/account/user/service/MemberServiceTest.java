@@ -5,6 +5,7 @@ import live.databo3.account.user.dto.JoinResponseDto;
 import live.databo3.account.user.dto.LoginInfoResponseDto;
 import live.databo3.account.user.entity.Member;
 import live.databo3.account.user.repository.MemberRepository;
+import live.databo3.account.user.repository.RolesRepository;
 import live.databo3.account.user.service.impl.MemberServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,20 +42,21 @@ class MemberServiceTest {
         String memberId = "memberId";
         String memberPw = "memberPw";
         String memberEmail = "member@databo3.live";
-        Member member = new Member(memberId, memberPw, memberEmail);
+        Member member = Member.createMember(memberId,memberPw,memberEmail, null, null);
 
         given(memberRepository.findById(any())).willReturn(Optional.of(member));
 
         LoginInfoResponseDto loginInfoResponseDto = memberService.getMemberIdAndPassword(memberId);
 
-        Assertions.assertThat(loginInfoResponseDto.getId()).isEqualTo(memberId);
-        Assertions.assertThat(loginInfoResponseDto.getPassword()).isEqualTo(memberPw);
+        Assertions.assertThat(loginInfoResponseDto.getMemberId()).isEqualTo(memberId);
+        Assertions.assertThat(loginInfoResponseDto.getMemberPassword()).isEqualTo(memberPw);
+        Assertions.assertThat(loginInfoResponseDto.getMemberEmail()).isEqualTo(memberEmail);
     }
 
     @Test
     void isExistByMemberEmail() {
 
-        given(memberRepository.existsByEmail(any())).willReturn(true);
+        given(memberRepository.existsByMemberEmail(any())).willReturn(true);
 
         String email = "member@databo3.live";
         Boolean result = memberService.isExistByMemberEmail(email);
@@ -81,14 +83,14 @@ class MemberServiceTest {
         emailField.setAccessible(true);
         emailField.set(joinRequestDto, "member@databo3.live");
 
-        Member member = Member.createMember(joinRequestDto.getId(), joinRequestDto.getPassword(), joinRequestDto.getEmail());
+        Member member = Member.createMember(joinRequestDto.getId(), joinRequestDto.getPassword(), joinRequestDto.getEmail(),null,null);
 
         given(memberRepository.save(any())).willReturn(member);
 
         JoinResponseDto joinResponseDto = memberService.registerMember(joinRequestDto);
 
-        Assertions.assertThat(joinResponseDto.getId()).isEqualTo(member.getId());
-        Assertions.assertThat(joinResponseDto.getPassword()).isEqualTo(member.getPw());
-        Assertions.assertThat(joinResponseDto.getEmail()).isEqualTo(member.getEmail());
+        Assertions.assertThat(joinResponseDto.getId()).isEqualTo(member.getMemberId());
+        Assertions.assertThat(joinResponseDto.getPassword()).isEqualTo(member.getMemberPassword());
+        Assertions.assertThat(joinResponseDto.getEmail()).isEqualTo(member.getMemberEmail());
     }
 }

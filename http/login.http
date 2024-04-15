@@ -13,3 +13,5 @@ Accept: application/json
 
 ###
 GET http://localhost:8090/api/account/member/email/test@test
+
+###
