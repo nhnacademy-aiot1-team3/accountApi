@@ -27,7 +27,7 @@ class MemberRepositoryTest {
 
         memberRepository.save(member);
 
-        Optional<Member> savedMember = memberRepository.findById("member");
+        Optional<Member> savedMember = memberRepository.findByMemberId("member");
 
         assertThat(savedMember.get().getMemberId().equals("member"));
     }
