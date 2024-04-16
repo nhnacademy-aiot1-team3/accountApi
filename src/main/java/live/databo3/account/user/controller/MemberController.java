@@ -58,4 +58,10 @@ public class MemberController {
     public ResponseEntity<JoinResponseDto> createMember(@RequestBody JoinRequestDto requestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(memberService.registerMember(requestDto));
     }
+
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteMember(@RequestHeader("X_USER_ID") String userId){
+        return null;
+    }
 }

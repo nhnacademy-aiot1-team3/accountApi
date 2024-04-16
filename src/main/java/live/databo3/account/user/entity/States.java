@@ -2,6 +2,7 @@ package live.databo3.account.user.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import javax.persistence.*;
  * @version 1.0.1
  */
 @Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @Table(name = "states")
