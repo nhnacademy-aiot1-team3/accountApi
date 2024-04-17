@@ -27,3 +27,14 @@ Accept: application/json
 ###
 GET http://localhost:8090/api/account/member/testId3
 Accept: application/json
+
+###
+PUT http://localhost:8090/api/account/member/modify/testId
+Content-Type: application/json
+
+{
+  "id" : "testId",
+  "password" : "etoq43odg",
+  "email" : "hello@test.com",
+  "role": 2
+}

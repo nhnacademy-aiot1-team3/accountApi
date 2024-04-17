@@ -1,9 +1,7 @@
 package live.databo3.account.user.controller;
 
 
-import live.databo3.account.user.dto.JoinRequestDto;
-import live.databo3.account.user.dto.JoinResponseDto;
-import live.databo3.account.user.dto.LoginInfoResponseDto;
+import live.databo3.account.user.dto.*;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +13,7 @@ import live.databo3.account.user.service.MemberService;
 /**
  * account-api로 들어오는 Member 관련 요청들을 처리하는 Controller
  * @author insub
- * @version 1.0.0
+ * @version 1.0.1
  */
 @Slf4j
 @RestController
@@ -57,5 +55,17 @@ public class MemberController {
     @PostMapping("/register")
     public ResponseEntity<JoinResponseDto> createMember(@RequestBody JoinRequestDto requestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(memberService.registerMember(requestDto));
+    }
+
+    /**
+     * Member를 modify하는 메소드
+     * @param memberId modifyMember()에서 조회하기 위한 파라미터
+     * @param request ResponseEntity를 구성하는데 필요한 requestDto 파라미터
+     * @return ResponseEntity 수성한 것을 반환
+     * @since 1.0.1
+     */
+    @PutMapping("/modify/{memberId}")
+    public ResponseEntity<UpdateMemberResponseDto> updateMember(@PathVariable("memberId")String memberId, @RequestBody UpdateMemberRequestDto request) {
+        return ResponseEntity.ok(memberService.modifyMember(memberId, request));
     }
 }
