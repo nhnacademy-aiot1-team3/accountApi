@@ -59,9 +59,15 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.CREATED).body(memberService.registerMember(requestDto));
     }
 
-
+    /**
+     * Member를 탈퇴하는 메소드
+     * @param userId 요청 헤더에 있는 X_USER_ID의 값
+     * @return ResponseEntity HTTP 204
+     */
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteMember(@RequestHeader("X_USER_ID") String userId){
-        return null;
+    public ResponseEntity<Void> deleteMember(@RequestHeader("X-USER-ID") String userId){
+        log.info("회원 탈퇴 아이디 : {}", userId);
+        memberService.deleteMember(userId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

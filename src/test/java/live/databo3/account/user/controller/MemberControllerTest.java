@@ -13,8 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(MemberController.class)
@@ -60,6 +59,14 @@ class MemberControllerTest {
                 .andExpect(jsonPath("$.id").value(testId))
                 .andExpect(jsonPath("$.password").value(testPw))
                 .andExpect(jsonPath("$.email").value(testEmail));
+
+    }
+
+    @Test
+    void deleteMember() throws Exception {
+
+        mockMvc.perform(delete("/api/account/member/delete").header("X-USER-ID", "testId"))
+                .andExpect(status().isNoContent());
 
     }
 

@@ -23,6 +23,7 @@ import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 
 class MemberServiceTest {
 
@@ -113,5 +114,28 @@ class MemberServiceTest {
         Assertions.assertThat(joinResponseDto.getId()).isEqualTo(member.getMemberId());
         Assertions.assertThat(joinResponseDto.getPassword()).isEqualTo(member.getMemberPassword());
         Assertions.assertThat(joinResponseDto.getEmail()).isEqualTo(member.getMemberEmail());
+    }
+
+    @Test
+    void deleteMember() throws Exception {
+
+        String id = "testId";
+
+        Roles roles = new Roles();
+        roles.setRoleName(Roles.ROLES.ROLE_VIEWER);
+        States states = new States();
+        states.setStateName(States.STATES.ACTIVE);
+
+        States quit = new States();
+        quit.setStateId(4L);
+        quit.setStateName(States.STATES.QUIT);
+
+        Member member = Member.createMember(id, "123", "test@test.live", roles, states);
+
+        given(memberRepository.findByMemberId(any())).willReturn(Optional.of(member));
+        given(statesRepository.findById(any())).willReturn(Optional.of(quit));
+
+        memberService.deleteMember(id);
+        verify(memberRepository).save(member);
     }
 }

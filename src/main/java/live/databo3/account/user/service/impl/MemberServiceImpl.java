@@ -1,6 +1,8 @@
 package live.databo3.account.user.service.impl;
 
 
+import live.databo3.account.error.ErrorCode;
+import live.databo3.account.exception.CustomException;
 import live.databo3.account.user.dto.JoinRequestDto;
 import live.databo3.account.user.dto.JoinResponseDto;
 import live.databo3.account.user.dto.LoginInfoResponseDto;
@@ -17,7 +19,6 @@ import live.databo3.account.user.repository.MemberRepository;
 import live.databo3.account.user.service.MemberService;
 
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 import java.util.Objects;
 
 /**
@@ -86,9 +87,9 @@ public class MemberServiceImpl implements MemberService {
       */
     @Override
     public JoinResponseDto registerMember(JoinRequestDto request) {
-        Roles roles = rolesRepository.findById(request.getRoles()).orElseThrow(NoSuchElementException::new);
+        Roles roles = rolesRepository.findById(request.getRoles()).orElseThrow(() -> new CustomException(ErrorCode.ROLE_NOT_FOUND));
         log.info("회원 가입 권한 : {}", roles);
-        States states = statesRepository.findById(1L).orElseThrow(NoSuchElementException::new);
+        States states = statesRepository.findById(1L).orElseThrow(() -> new CustomException(ErrorCode.STATE_NOT_FOUND));
         log.info("회원 가입 상태 : {}", states);
 
         Member member = Member.createMember(request.getId(), passwordEncoder.encode(request.getPassword()), request.getEmail(), roles, states);
@@ -99,5 +100,14 @@ public class MemberServiceImpl implements MemberService {
 
         return memberRepository.save(member).toDto();
 
+    }
+
+    @Override
+    public void deleteMember(String id) {
+
+        Member savedMember = memberRepository.findByMemberId(id).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        States quit = statesRepository.findById(4L).orElseThrow(() -> new CustomException(ErrorCode.STATE_NOT_FOUND));
+        savedMember.setStates(quit);
+        memberRepository.save(savedMember);
     }
 }

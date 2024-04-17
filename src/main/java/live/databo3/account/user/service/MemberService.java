@@ -35,4 +35,6 @@ public interface MemberService {
      * @since 1.0.0
      */
     JoinResponseDto registerMember(JoinRequestDto request);
+
+    void deleteMember(String id);
 }
