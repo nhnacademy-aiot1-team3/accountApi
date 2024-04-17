@@ -1,0 +1,29 @@
+POST http://localhost:8090/api/account/member/register
+Content-Type: application/json
+
+{
+  "id": "testId",
+  "password": "testPassword",
+  "email": "test@test.com",
+  "roles": 2
+}
+
+###
+POST http://localhost:8090/api/account/member/register
+Content-Type: application/json
+
+{
+  "id": "testId3",
+  "password": "testPassword",
+  "email": "test@test.com",
+  "roles": 3
+}
+
+
+###
+GET http://localhost:8090/api/account/member/testId
+Accept: application/json
+
+###
+GET http://localhost:8090/api/account/member/testId3
+Accept: application/json

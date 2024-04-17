@@ -14,4 +14,5 @@ public class JoinRequestDto {
     private String id;
     private String password;
     private String email;
+    private Long roles;
 }
