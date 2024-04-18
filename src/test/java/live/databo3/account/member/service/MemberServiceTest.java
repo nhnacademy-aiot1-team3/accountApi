@@ -114,6 +114,28 @@ class MemberServiceTest {
     }
 
     @Test
+    void upgradeMember() throws Exception{
+
+        String memberId = "testId";
+        Long roleId = 2L;
+
+        Roles roles = new Roles();
+        roles.setRoleName(Roles.ROLES.ROLE_VIEWER);
+        States states = new States();
+        states.setStateName(States.STATES.ACTIVE);
+
+        Member member = Member.createMember("memberId", "memberPw", "member@databo3.live", roles, states);
+        given(memberRepository.findByMemberId(any())).willReturn(Optional.of(member));
+        given(rolesRepository.findById(any())).willReturn(Optional.of(roles));
+
+        memberService.upgradeRoles(memberId, roleId);
+
+        verify(memberRepository, times(1)).findByMemberId(any());
+        verify(rolesRepository, times(1)).findById(any());
+        verify(memberRepository, times(1)).save(any());
+    }
+
+    @Test
     void modifyMember() throws Exception {
 
         Roles roles = new Roles();
@@ -175,6 +197,6 @@ class MemberServiceTest {
         given(statesRepository.findById(any())).willReturn(Optional.of(quit));
 
         memberService.deleteMember(id);
-        verify(memberRepository).save(member);
+        verify(memberRepository, times(1)).save(member);
     }
 }
