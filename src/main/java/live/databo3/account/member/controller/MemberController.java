@@ -1,9 +1,7 @@
 package live.databo3.account.member.controller;
 
 
-import live.databo3.account.member.dto.JoinRequestDto;
-import live.databo3.account.member.dto.JoinResponseDto;
-import live.databo3.account.member.dto.LoginInfoResponseDto;
+import live.databo3.account.member.dto.*;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,18 +58,8 @@ public class MemberController {
     }
 
     @PutMapping("/upgrade")
-    public ResponseEntity<Void> upgradeRole()
-
-    /**
-     * Member를 탈퇴하는 메소드
-     * @param userId 요청 헤더에 있는 X_USER_ID의 값
-     * @return ResponseEntity HTTP 204
-     */
-    @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteMember(@RequestHeader("X-USER-ID") String userId){
-        log.info("회원 탈퇴 아이디 : {}", userId);
-        memberService.deleteMember(userId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    public ResponseEntity<Void> upgradeRole() {
+        return null;
     }
 
     /**
@@ -85,4 +73,17 @@ public class MemberController {
     public ResponseEntity<UpdateMemberResponseDto> updateMember(@PathVariable("memberId")String memberId, @RequestBody UpdateMemberRequestDto request) {
         return ResponseEntity.ok(memberService.modifyMember(memberId, request));
     }
+
+    /**
+     * Member를 탈퇴하는 메소드
+     * @param userId 요청 헤더에 있는 X_USER_ID의 값
+     * @return ResponseEntity HTTP 204
+     */
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteMember(@RequestHeader("X-USER-ID") String userId){
+        log.info("회원 탈퇴 아이디 : {}", userId);
+        memberService.deleteMember(userId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 }
