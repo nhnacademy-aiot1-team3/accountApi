@@ -36,10 +36,17 @@ public interface MemberService {
 
     /**
      * Member 역할 수정 메서드
-     * @param memberId 역할을 수정 할 멤버의 아이디
+     * @param memberId 역할을 수정할 멤버의 아이디
      * @since 1.0.1
      */
     void upgradeRoles(String memberId,Long roleId);
+
+    /**
+     * Member 상태 수정 메서드
+     * @param memberId 상태를 수정할 멤버의 아이디
+     * @since 1.0.1
+     */
+    void changeState(String memberId);
 
     /**
      * Member 수정 메서드

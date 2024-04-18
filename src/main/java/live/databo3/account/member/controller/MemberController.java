@@ -60,18 +60,36 @@ public class MemberController {
     }
 
     /**
-     * Member의 Roles 변경을 요청하는 메소드
+     * Member Roles 변경을 요청하는 메소드
      * 현재 viewer 에서 owner 변경 요청만 가능함
      * 요청 보낼 때 Content-Type: application/x-www-form-urlencoded
      * (version 1.0.1)
      * @param memberId Roles 변경을 원하는 멤버의 아이디
-     * @return ResponseEntity 수정 성공 200 ok
+     * @return ResponseEntity 200 ok, message = success
      * @since 1.0.1
      */
     @PutMapping("/upgrade")
-    public ResponseEntity<HashMap<String, String>> upgradeRole(@RequestHeader("X-USER-ID") String memberId,@RequestParam("roleId") Long roleId) {
+    public ResponseEntity<HashMap<String, String>> upgradeRole(@RequestHeader("X-USER-ID") String memberId, @RequestParam("roleId") Long roleId) {
         log.info("권한 승급 아이디 : {}, roleId : {}", memberId, roleId);
         memberService.upgradeRoles(memberId, roleId);
+
+        HashMap<String, String> response = new HashMap<>();
+        response.put("message", "success");
+        return ResponseEntity.ok(response);
+    }
+
+    /**
+     * Member States 변경을 요청하는 메서드
+     * 현재 pause 에서 active 로 변경하는 메서드
+     * @param memberId State 변경을 원하는 멤버의 아이디
+     * @return ResponseEntity 200 ok, message = success
+     */
+    @PutMapping("/state")
+    public ResponseEntity<HashMap<String, String>> modifyState(@RequestHeader("X-USER-ID") String memberId) {
+        log.info("휴면 상태 해제 아이디 : {}", memberId);
+
+        //service 추가
+        memberService.changeState(memberId);
 
         HashMap<String, String> response = new HashMap<>();
         response.put("message", "success");

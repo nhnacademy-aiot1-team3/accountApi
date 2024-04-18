@@ -118,6 +118,22 @@ public class MemberServiceImpl implements MemberService {
 
     /**
      * {@inheritDoc}
+     * @param memberId 상태를 수정할 멤버의 아이디
+     */
+    @Override
+    public void changeState(String memberId) {
+        Member member = memberRepository.findByMemberId(memberId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        log.info("상태 변경 전 member(pause): {}", member);
+
+        States active = statesRepository.findById(2L).orElseThrow(() -> new CustomException(ErrorCode.STATE_NOT_FOUND));
+        member.setStates(active);
+        log.info("상태 변경 후 member(active): {}", member);
+
+        memberRepository.save(member);
+    }
+
+    /**
+     * {@inheritDoc}
      * Member를 modify하는 메서드, findById 메서드를 통해 member가 있는지 확인하고
      * member가 null이면 IllegalStateException을 던짐
      * member가 null이 아니면 password과 email을 변경 할 수 있음
