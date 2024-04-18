@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8090/api/account/member/test1
+GET http://localhost:8090/api/account/member/testId7
 Accept: application/json
 
 ###

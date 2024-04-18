@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import live.databo3.account.member.service.MemberService;
 
+import java.util.HashMap;
+
 /**
  * account-api로 들어오는 Member 관련 요청들을 처리하는 Controller
  * @author insub
@@ -59,12 +61,21 @@ public class MemberController {
 
     /**
      * Member의 Roles 변경을 요청하는 메소드
+     * 현재 viewer 에서 owner 변경 요청만 가능함
+     * 요청 보낼 때 Content-Type: application/x-www-form-urlencoded
+     * (version 1.0.1)
      * @param memberId Roles 변경을 원하는 멤버의 아이디
      * @return ResponseEntity 수정 성공 200 ok
+     * @since 1.0.1
      */
     @PutMapping("/upgrade")
-    public ResponseEntity<Void> upgradeRole(@RequestHeader("X-USER-ID") String memberId) {
-        return null;
+    public ResponseEntity<HashMap<String, String>> upgradeRole(@RequestHeader("X-USER-ID") String memberId,@RequestParam("roleId") Long roleId) {
+        log.info("권한 승급 아이디 : {}, roleId : {}", memberId, roleId);
+        memberService.upgradeRoles(memberId, roleId);
+
+        HashMap<String, String> response = new HashMap<>();
+        response.put("message", "success");
+        return ResponseEntity.ok(response);
     }
 
     /**

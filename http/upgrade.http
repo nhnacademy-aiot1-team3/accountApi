@@ -1,0 +1,7 @@
+PUT http://localhost:8090/api/account/member/upgrade
+Content-Type: application/x-www-form-urlencoded
+X-USER-ID: testId7
+
+roleId=2
+
+###

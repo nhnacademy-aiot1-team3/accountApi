@@ -12,8 +12,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(MemberController.class)
@@ -63,8 +65,16 @@ class MemberControllerTest {
     }
 
     @Test
-    void deleteMember() throws Exception {
+    void upgradeMember() throws Exception {
+        mockMvc.perform(put("/api/account/member/upgrade").header("X-USER-ID","testID").param("roleId","2"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value("success"))
+                .andDo(print());
+    }
 
+    @Test
+    void deleteMember() throws Exception {
         mockMvc.perform(delete("/api/account/member/delete").header("X-USER-ID", "testId"))
                 .andExpect(status().isNoContent());
 
