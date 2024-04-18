@@ -15,15 +15,13 @@ import live.databo3.account.member.service.MemberService;
 /**
  * account-api로 들어오는 Member 관련 요청들을 처리하는 Controller
  * @author insub
- * @version 1.0.0
+ * @version 1.0.1
  */
 @Slf4j
 @RestController
 @RequestMapping("/api/account/member")
 @RequiredArgsConstructor
 public class MemberController {
-
-    private final String
 
     private final MemberService memberService;
 
@@ -74,5 +72,17 @@ public class MemberController {
         log.info("회원 탈퇴 아이디 : {}", userId);
         memberService.deleteMember(userId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    /**
+     * Member를 modify하는 메소드
+     * @param memberId modifyMember()에서 조회하기 위한 파라미터
+     * @param request ResponseEntity를 구성하는데 필요한 requestDto 파라미터
+     * @return ResponseEntity 수성한 것을 반환
+     * @since 1.0.1
+     */
+    @PutMapping("/modify/{memberId}")
+    public ResponseEntity<UpdateMemberResponseDto> updateMember(@PathVariable("memberId")String memberId, @RequestBody UpdateMemberRequestDto request) {
+        return ResponseEntity.ok(memberService.modifyMember(memberId, request));
     }
 }

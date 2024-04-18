@@ -8,7 +8,7 @@ import live.databo3.account.member.dto.LoginInfoResponseDto;
 /**
  * 멤버와 관련된 요청 처리하는 Service interface
  * @author insub
- * @version 1.0.0
+ * @version 1.0.1
  */
 public interface MemberService {
 
@@ -35,6 +35,15 @@ public interface MemberService {
      * @since 1.0.0
      */
     JoinResponseDto registerMember(JoinRequestDto request);
+
+    /**
+     * Member 수정 메서드
+     * @param userId Member를 조회하기 위한 param
+     * @param updateMemberRequest 수정에 필요한 Dto
+     * @return 수정하기 위해 생성한 updateMemberResponse Dto
+     * @since 1.0.1
+     */
+    UpdateMemberResponseDto modifyMember(String userId, UpdateMemberRequestDto updateMemberRequest);
 
     void deleteMember(String id);
 }

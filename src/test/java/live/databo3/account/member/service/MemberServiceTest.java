@@ -19,6 +19,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -32,9 +33,9 @@ class MemberServiceTest {
     @Mock
     RolesRepository rolesRepository;
     @Mock
-    PasswordEncoder passwordEncoder;
-    @Mock
     StatesRepository statesRepository;
+    @Mock
+    PasswordEncoder passwordEncoder;
 
     @InjectMocks
     private MemberServiceImpl memberService;
@@ -50,7 +51,6 @@ class MemberServiceTest {
         String memberId = "memberId";
         String memberPw = "memberPw";
         String memberEmail = "member@databo3.live";
-        // given 으로 role state 객체 가져오기
 
         Roles roles = new Roles();
         roles.setRoleName(Roles.ROLES.ROLE_ADMIN);
@@ -114,6 +114,48 @@ class MemberServiceTest {
         Assertions.assertThat(joinResponseDto.getId()).isEqualTo(member.getMemberId());
         Assertions.assertThat(joinResponseDto.getPassword()).isEqualTo(member.getMemberPassword());
         Assertions.assertThat(joinResponseDto.getEmail()).isEqualTo(member.getMemberEmail());
+    }
+
+    @Test
+    void modifyMember() throws Exception {
+
+        Roles roles = new Roles();
+        roles.setRoleName(Roles.ROLES.ROLE_ADMIN);
+        States states = new States();
+        states.setStateName(States.STATES.WAIT);
+
+        Member member = Member.createMember("memberId", "memberPw", "member@databo3.live", roles, states);
+
+        given(rolesRepository.findById(any())).willReturn(Optional.of(roles));
+        given(statesRepository.findById(any())).willReturn(Optional.of(states));
+        given(memberRepository.save(any())).willReturn(member);
+
+        Class<UpdateMemberRequestDto> clzz = UpdateMemberRequestDto.class;
+        UpdateMemberRequestDto updateMemberRequestDto = clzz.getDeclaredConstructor().newInstance();
+
+        Field memberIdField = clzz.getDeclaredField("id");
+        memberIdField.setAccessible(true);
+        memberIdField.set(updateMemberRequestDto, "memberId");
+
+        Field memberPwField = clzz.getDeclaredField("password");
+        memberPwField.setAccessible(true);
+        memberPwField.set(updateMemberRequestDto, "member125135");
+
+        Field memberEmailField = clzz.getDeclaredField("email");
+        memberEmailField.setAccessible(true);
+        memberEmailField.set(updateMemberRequestDto, "member1344@databo3.live");
+
+        Member modifyMember = Member.createMember(updateMemberRequestDto.getId(), updateMemberRequestDto.getPassword(), updateMemberRequestDto.getEmail(), roles, states);
+
+        given(memberRepository.findByMemberId(any())).willReturn(Optional.of(member));
+        given(memberRepository.save(any())).willReturn(modifyMember);
+        given(passwordEncoder.encode(any())).willReturn("member125135");
+
+        UpdateMemberResponseDto updateMemberResponseDto = memberService.modifyMember(updateMemberRequestDto.getId(), updateMemberRequestDto);
+
+        Assertions.assertThat(updateMemberResponseDto.getPassword()).isEqualTo(modifyMember.getMemberPassword());
+        Assertions.assertThat(updateMemberResponseDto.getEmail()).isEqualTo(modifyMember.getMemberEmail());
+
     }
 
     @Test

@@ -24,7 +24,7 @@ import java.util.Objects;
 /**
  * MemberService의 구현체
  * @author insub
- * @version 1.0.0
+ * @version 1.0.1
  */
 @Service
 @Slf4j
@@ -100,6 +100,41 @@ public class MemberServiceImpl implements MemberService {
 
         return memberRepository.save(member).toDto();
 
+    }
+
+    /**
+     * {@inheritDoc}
+     * Member를 modify하는 메서드, findById 메서드를 통해 member가 있는지 확인하고
+     * member가 null이면 IllegalStateException을 던짐
+     * member가 null이 아니면 password과 email을 변경 할 수 있음
+     *
+     * @param memberId member를 조회하기 위한 param
+     * @param updateMemberRequest 수정에 필요한 param
+     * @throws IllegalStateException
+     * @return 수정된 member를 리턴
+     * @since 1.0.1
+     */
+    @Override
+    public UpdateMemberResponseDto modifyMember(String memberId, UpdateMemberRequestDto updateMemberRequest) {
+        Member member = memberRepository.findByMemberId(memberId).orElse(null);
+        if(Objects.isNull(member)) {
+            throw new IllegalStateException("user not found");
+        }
+        if(Objects.isNull(updateMemberRequest.getPassword())) {
+            throw new IllegalStateException("password is null");
+        }
+        member.setMemberPassword(passwordEncoder.encode(updateMemberRequest.getPassword()));
+        member.setMemberEmail(updateMemberRequest.getEmail());
+
+        memberRepository.save(member);
+
+        log.info("member Password : {}", member.getMemberPassword());
+        log.info("member Email : {}", member.getMemberEmail());
+
+        return new UpdateMemberResponseDto(member.getMemberId(),
+                member.getMemberPassword(),
+                member.getMemberEmail(),
+                member.getRoles().getRoleName().toString());
     }
 
     @Override
