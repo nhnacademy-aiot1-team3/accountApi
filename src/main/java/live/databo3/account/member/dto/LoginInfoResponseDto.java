@@ -1,4 +1,4 @@
-package live.databo3.account.user.dto;
+package live.databo3.account.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

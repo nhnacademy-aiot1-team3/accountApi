@@ -1,6 +1,6 @@
 package live.databo3.account;
 
-import live.databo3.account.user.service.impl.MemberServiceImpl;
+import live.databo3.account.member.service.impl.MemberServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,6 @@
-package live.databo3.account.user.repository;
+package live.databo3.account.member.repository;
 
-import live.databo3.account.user.entity.Member;
+import live.databo3.account.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

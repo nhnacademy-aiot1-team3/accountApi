@@ -1,15 +1,15 @@
-package live.databo3.account.user.service;
+package live.databo3.account.member.service;
 
-import live.databo3.account.user.dto.JoinRequestDto;
-import live.databo3.account.user.dto.JoinResponseDto;
-import live.databo3.account.user.dto.LoginInfoResponseDto;
-import live.databo3.account.user.entity.Member;
-import live.databo3.account.user.entity.Roles;
-import live.databo3.account.user.entity.States;
-import live.databo3.account.user.repository.MemberRepository;
-import live.databo3.account.user.repository.RolesRepository;
-import live.databo3.account.user.repository.StatesRepository;
-import live.databo3.account.user.service.impl.MemberServiceImpl;
+import live.databo3.account.member.dto.JoinRequestDto;
+import live.databo3.account.member.dto.JoinResponseDto;
+import live.databo3.account.member.dto.LoginInfoResponseDto;
+import live.databo3.account.member.entity.Member;
+import live.databo3.account.member.entity.Roles;
+import live.databo3.account.member.entity.States;
+import live.databo3.account.member.repository.MemberRepository;
+import live.databo3.account.member.repository.RolesRepository;
+import live.databo3.account.member.repository.StatesRepository;
+import live.databo3.account.member.service.impl.MemberServiceImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,9 +1,9 @@
-package live.databo3.account.user.service;
+package live.databo3.account.member.service;
 
 
-import live.databo3.account.user.dto.JoinRequestDto;
-import live.databo3.account.user.dto.JoinResponseDto;
-import live.databo3.account.user.dto.LoginInfoResponseDto;
+import live.databo3.account.member.dto.JoinRequestDto;
+import live.databo3.account.member.dto.JoinResponseDto;
+import live.databo3.account.member.dto.LoginInfoResponseDto;
 
 /**
  * 멤버와 관련된 요청 처리하는 Service interface

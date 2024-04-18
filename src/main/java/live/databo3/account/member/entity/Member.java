@@ -1,11 +1,10 @@
-package live.databo3.account.user.entity;
+package live.databo3.account.member.entity;
 
-import live.databo3.account.user.dto.JoinResponseDto;
+import live.databo3.account.member.dto.JoinResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,7 +26,7 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_number")
     private Long memberNumber;
-    @Column(name = "member_id")
+    @Column(name = "member_id", nullable = false)
     private String memberId;
     @Column(name = "member_password")
     private String memberPassword;

@@ -1,22 +1,22 @@
-package live.databo3.account.user.service.impl;
+package live.databo3.account.member.service.impl;
 
 
 import live.databo3.account.error.ErrorCode;
 import live.databo3.account.exception.CustomException;
-import live.databo3.account.user.dto.JoinRequestDto;
-import live.databo3.account.user.dto.JoinResponseDto;
-import live.databo3.account.user.dto.LoginInfoResponseDto;
-import live.databo3.account.user.entity.Member;
-import live.databo3.account.user.entity.Roles;
-import live.databo3.account.user.entity.States;
-import live.databo3.account.user.repository.RolesRepository;
-import live.databo3.account.user.repository.StatesRepository;
+import live.databo3.account.member.dto.JoinRequestDto;
+import live.databo3.account.member.dto.JoinResponseDto;
+import live.databo3.account.member.dto.LoginInfoResponseDto;
+import live.databo3.account.member.entity.Member;
+import live.databo3.account.member.entity.Roles;
+import live.databo3.account.member.entity.States;
+import live.databo3.account.member.repository.RolesRepository;
+import live.databo3.account.member.repository.StatesRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import live.databo3.account.user.repository.MemberRepository;
-import live.databo3.account.user.service.MemberService;
+import live.databo3.account.member.repository.MemberRepository;
+import live.databo3.account.member.service.MemberService;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

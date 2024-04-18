@@ -1,16 +1,16 @@
-package live.databo3.account.user.controller;
+package live.databo3.account.member.controller;
 
 
-import live.databo3.account.user.dto.JoinRequestDto;
-import live.databo3.account.user.dto.JoinResponseDto;
-import live.databo3.account.user.dto.LoginInfoResponseDto;
+import live.databo3.account.member.dto.JoinRequestDto;
+import live.databo3.account.member.dto.JoinResponseDto;
+import live.databo3.account.member.dto.LoginInfoResponseDto;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import live.databo3.account.user.service.MemberService;
+import live.databo3.account.member.service.MemberService;
 
 /**
  * account-api로 들어오는 Member 관련 요청들을 처리하는 Controller
@@ -22,6 +22,8 @@ import live.databo3.account.user.service.MemberService;
 @RequestMapping("/api/account/member")
 @RequiredArgsConstructor
 public class MemberController {
+
+    private final String
 
     private final MemberService memberService;
 
@@ -58,6 +60,9 @@ public class MemberController {
     public ResponseEntity<JoinResponseDto> createMember(@RequestBody JoinRequestDto requestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(memberService.registerMember(requestDto));
     }
+
+    @PutMapping("/upgrade")
+    public ResponseEntity<Void> upgradeRole()
 
     /**
      * Member를 탈퇴하는 메소드

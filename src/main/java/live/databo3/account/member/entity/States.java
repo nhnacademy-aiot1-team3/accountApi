@@ -1,4 +1,4 @@
-package live.databo3.account.user.entity;
+package live.databo3.account.member.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,9 +1,9 @@
-package live.databo3.account.user.controller;
+package live.databo3.account.member.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import live.databo3.account.user.dto.JoinResponseDto;
-import live.databo3.account.user.dto.LoginInfoResponseDto;
-import live.databo3.account.user.service.MemberService;
+import live.databo3.account.member.dto.JoinResponseDto;
+import live.databo3.account.member.dto.LoginInfoResponseDto;
+import live.databo3.account.member.service.MemberService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
