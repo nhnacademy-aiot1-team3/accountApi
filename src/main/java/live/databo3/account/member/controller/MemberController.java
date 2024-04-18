@@ -47,7 +47,7 @@ public class MemberController {
     }
 
     /**
-     * Member를 create하는 메소드
+     * Member를 생성하는 메소드
      * @param requestDto ResponseEntity를 구성하는데 필요한 requestDto 파라미터
      * @return ResponseEntity 생성 성공한 Member dto
      * @since 1.0.0
@@ -57,13 +57,18 @@ public class MemberController {
         return ResponseEntity.status(HttpStatus.CREATED).body(memberService.registerMember(requestDto));
     }
 
+    /**
+     * Member의 Roles 변경을 요청하는 메소드
+     * @param memberId Roles 변경을 원하는 멤버의 아이디
+     * @return ResponseEntity 수정 성공 200 ok
+     */
     @PutMapping("/upgrade")
-    public ResponseEntity<Void> upgradeRole() {
+    public ResponseEntity<Void> upgradeRole(@RequestHeader("X-USER-ID") String memberId) {
         return null;
     }
 
     /**
-     * Member를 modify하는 메소드
+     * Member를 수정하는 메소드
      * @param memberId modifyMember()에서 조회하기 위한 파라미터
      * @param request ResponseEntity를 구성하는데 필요한 requestDto 파라미터
      * @return ResponseEntity 수성한 것을 반환
@@ -76,13 +81,13 @@ public class MemberController {
 
     /**
      * Member를 탈퇴하는 메소드
-     * @param userId 요청 헤더에 있는 X_USER_ID의 값
+     * @param memberId 요청 헤더에 있는 X_USER_ID의 값
      * @return ResponseEntity HTTP 204
      */
     @DeleteMapping("/delete")
-    public ResponseEntity<Void> deleteMember(@RequestHeader("X-USER-ID") String userId){
-        log.info("회원 탈퇴 아이디 : {}", userId);
-        memberService.deleteMember(userId);
+    public ResponseEntity<Void> deleteMember(@RequestHeader("X-USER-ID") String memberId){
+        log.info("회원 탈퇴 아이디 : {}", memberId);
+        memberService.deleteMember(memberId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

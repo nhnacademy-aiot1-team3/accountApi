@@ -135,6 +135,13 @@ public class MemberServiceImpl implements MemberService {
                 member.getRoles().getRoleName().toString());
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param id 삭제할 멤버의 아이디
+     * @throws CustomException 없는 멤버, 없는 states
+     * @since 1.0.1
+     */
     @Override
     public void deleteMember(String id) {
 
