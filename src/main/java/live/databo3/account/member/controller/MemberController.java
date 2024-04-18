@@ -94,6 +94,7 @@ public class MemberController {
      * Member를 탈퇴하는 메소드
      * @param memberId 요청 헤더에 있는 X_USER_ID의 값
      * @return ResponseEntity HTTP 204
+     * @since 1.0.1
      */
     @DeleteMapping("/delete")
     public ResponseEntity<Void> deleteMember(@RequestHeader("X-USER-ID") String memberId){

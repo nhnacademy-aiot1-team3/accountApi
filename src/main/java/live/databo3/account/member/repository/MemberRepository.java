@@ -1,8 +1,13 @@
 package live.databo3.account.member.repository;
 
 import live.databo3.account.member.entity.Member;
+import live.databo3.account.member.entity.States;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 /**
@@ -25,5 +30,10 @@ public interface MemberRepository extends JpaRepository<Member, String> {
      * @return Optional<Member>
      */
     Optional<Member> findByMemberId(String requestId);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE Member m SET m.states = :pause WHERE m.lastLoginDateTime <= :cutoffDateTime AND m.states != :pause")
+    int updateStatesByLastLoginTime(LocalDateTime cutoffDateTime, States pause);
 
 }
