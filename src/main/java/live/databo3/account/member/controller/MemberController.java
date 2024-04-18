@@ -74,7 +74,7 @@ public class MemberController {
         memberService.upgradeRoles(memberId, roleId);
 
         HashMap<String, String> response = new HashMap<>();
-        response.put("message", "성공");
+        response.put("message", "success");
         return ResponseEntity.ok(response);
     }
 
