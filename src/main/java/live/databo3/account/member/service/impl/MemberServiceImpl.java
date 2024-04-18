@@ -102,6 +102,22 @@ public class MemberServiceImpl implements MemberService {
 
     /**
      * {@inheritDoc}
+     * @param memberId 역할을 수정 할 멤버의 아이디
+     */
+    @Override
+    public void upgradeRoles(String memberId, Long roleId) {
+        Member member = memberRepository.findByMemberId(memberId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        log.info("권한 변경 전 member(viewer): {}", member);
+
+        Roles owner = rolesRepository.findById(roleId).orElseThrow(() -> new CustomException(ErrorCode.ROLE_NOT_FOUND));
+        member.setRoles(owner);
+        log.info("권한 변경 후 member(owner): {}", member);
+
+        memberRepository.save(member);
+    }
+
+    /**
+     * {@inheritDoc}
      * Member를 modify하는 메서드, findById 메서드를 통해 member가 있는지 확인하고
      * member가 null이면 IllegalStateException을 던짐
      * member가 null이 아니면 password과 email을 변경 할 수 있음
