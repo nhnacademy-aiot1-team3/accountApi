@@ -10,7 +10,7 @@ import live.databo3.account.member.repository.MemberRepository;
 import live.databo3.account.member.repository.RolesRepository;
 import live.databo3.account.member.repository.StatesRepository;
 import live.databo3.account.member.service.impl.MemberServiceImpl;
-import org.assertj.core.api.Assertions;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -132,7 +132,7 @@ class MemberServiceTest {
 
 
     @Test
-    void upgradeMember() throws Exception{
+    void upgradeMember() {
 
         String memberId = "testId";
         Long roleId = 2L;
@@ -165,8 +165,6 @@ class MemberServiceTest {
 
         Member member = Member.createMember("memberId", "memberPw", "member@databo3.live", roles, states);
 
-        given(rolesRepository.findById(any())).willReturn(Optional.of(roles));
-        given(statesRepository.findById(any())).willReturn(Optional.of(states));
         given(memberRepository.save(any())).willReturn(member);
 
         Class<UpdateMemberRequestDto> clzz = UpdateMemberRequestDto.class;
@@ -198,7 +196,7 @@ class MemberServiceTest {
     }
 
     @Test
-    void deleteMember() throws Exception {
+    void deleteMember() {
 
         String id = "testId";
 
@@ -219,4 +217,16 @@ class MemberServiceTest {
         memberService.deleteMember(id);
         verify(memberRepository, times(1)).save(member);
     }
+
+    @Test
+    void duplicateId() {
+        Member member = new Member();
+
+        given(memberRepository.findByMemberId(anyString())).willReturn(Optional.of(member));
+
+        boolean result = memberService.requestIdDuplicateCheck(anyString());
+
+        assertThat(result).isTrue();
+    }
+
 }

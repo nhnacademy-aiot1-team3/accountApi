@@ -85,7 +85,7 @@ public class MemberController {
      * @return ResponseEntity 200 ok, message = success
      */
     @PutMapping("/state")
-    public ResponseEntity<HashMap<String, String>> modifyState(@RequestHeader("X-USER-ID") String memberId) {
+    public ResponseEntity<HashMap<String, String>> updateState(@RequestHeader("X-USER-ID") String memberId) {
         log.info("휴면 상태 해제 아이디 : {}", memberId);
 
         //service 추가
@@ -119,6 +119,17 @@ public class MemberController {
         log.info("회원 탈퇴 아이디 : {}", memberId);
         memberService.deleteMember(memberId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    /**
+     * 아이디 중복 체크 메서드
+     * @param requestId 중복 확인할 아이디
+     * @return 200 OK, 중복되면 true, 아니면 false
+     */
+    @GetMapping("/duplicate/{memberId}")
+    public ResponseEntity<Boolean> requestIdDuplicateCheck(@PathVariable("memberId") String requestId) {
+        log.info("중복 아이디 체크 : {}", requestId);
+        return ResponseEntity.status(HttpStatus.OK).body(memberService.requestIdDuplicateCheck(requestId));
     }
 
 }

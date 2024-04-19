@@ -169,7 +169,6 @@ public class MemberServiceImpl implements MemberService {
 
     /**
      * {@inheritDoc}
-     *
      * @param id 삭제할 멤버의 아이디
      * @throws CustomException 없는 멤버, 없는 states
      * @since 1.0.1
@@ -181,5 +180,18 @@ public class MemberServiceImpl implements MemberService {
         States quit = statesRepository.findById(4L).orElseThrow(() -> new CustomException(ErrorCode.STATE_NOT_FOUND));
         savedMember.setStates(quit);
         memberRepository.save(savedMember);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @param requestId 중복 체크할 아이디
+     * @return Boolean
+     * @since 1.0.1
+     */
+    @Override
+    public Boolean requestIdDuplicateCheck(String requestId) {
+
+        Member member = memberRepository.findByMemberId(requestId).orElse(null);
+        return Objects.nonNull(member);
     }
 }
