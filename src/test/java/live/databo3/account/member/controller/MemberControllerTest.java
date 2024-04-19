@@ -11,8 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -65,6 +64,15 @@ class MemberControllerTest {
     }
 
     @Test
+    void changeState() throws Exception {
+        mockMvc.perform(put("/api/account/member/state").header("X-USER-ID", anyString()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value("success"))
+                .andDo(print());
+    }
+
+    @Test
     void upgradeMember() throws Exception {
         mockMvc.perform(put("/api/account/member/upgrade").header("X-USER-ID","testID").param("roleId","2"))
                 .andExpect(status().isOk())
@@ -78,6 +86,19 @@ class MemberControllerTest {
         mockMvc.perform(delete("/api/account/member/delete").header("X-USER-ID", "testId"))
                 .andExpect(status().isNoContent());
 
+    }
+
+    @Test
+    void duplicateId() throws Exception {
+        String requestId = "testId";
+
+        given(memberService.requestIdDuplicateCheck(anyString())).willReturn(Boolean.TRUE);
+
+        mockMvc.perform(get("/api/account/member/duplicate/{memberId}", requestId))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").value(true))
+                .andDo(print());
     }
 
 }

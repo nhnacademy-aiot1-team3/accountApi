@@ -1,5 +1,7 @@
 package live.databo3.account.member.service;
 
+import live.databo3.account.error.ErrorCode;
+import live.databo3.account.exception.CustomException;
 import live.databo3.account.member.dto.*;
 import live.databo3.account.member.entity.Member;
 import live.databo3.account.member.entity.Roles;
@@ -8,21 +10,25 @@ import live.databo3.account.member.repository.MemberRepository;
 import live.databo3.account.member.repository.RolesRepository;
 import live.databo3.account.member.repository.StatesRepository;
 import live.databo3.account.member.service.impl.MemberServiceImpl;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.lang.reflect.Field;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class MemberServiceTest {
 
     @Mock
@@ -36,11 +42,6 @@ class MemberServiceTest {
 
     @InjectMocks
     private MemberServiceImpl memberService;
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
 
     @Test
     void getMemberIdAndPassword() {
@@ -60,9 +61,9 @@ class MemberServiceTest {
 
         LoginInfoResponseDto loginInfoResponseDto = memberService.getMemberIdAndPassword(memberId);
 
-        Assertions.assertThat(loginInfoResponseDto.getMemberId()).isEqualTo(memberId);
-        Assertions.assertThat(loginInfoResponseDto.getMemberPassword()).isEqualTo(memberPw);
-        Assertions.assertThat(loginInfoResponseDto.getMemberEmail()).isEqualTo(memberEmail);
+        assertThat(loginInfoResponseDto.getMemberId()).isEqualTo(memberId);
+        assertThat(loginInfoResponseDto.getMemberPassword()).isEqualTo(memberPw);
+        assertThat(loginInfoResponseDto.getMemberEmail()).isEqualTo(memberEmail);
     }
 
     @Test
@@ -73,7 +74,7 @@ class MemberServiceTest {
         String email = "member@databo3.live";
         Boolean result = memberService.isExistByMemberEmail(email);
 
-        Assertions.assertThat(result).isTrue();
+        assertThat(result).isTrue();
 
     }
 
@@ -108,13 +109,30 @@ class MemberServiceTest {
 
         JoinResponseDto joinResponseDto = memberService.registerMember(joinRequestDto);
 
-        Assertions.assertThat(joinResponseDto.getId()).isEqualTo(member.getMemberId());
-        Assertions.assertThat(joinResponseDto.getPassword()).isEqualTo(member.getMemberPassword());
-        Assertions.assertThat(joinResponseDto.getEmail()).isEqualTo(member.getMemberEmail());
+        assertThat(joinResponseDto.getId()).isEqualTo(member.getMemberId());
+        assertThat(joinResponseDto.getPassword()).isEqualTo(member.getMemberPassword());
+        assertThat(joinResponseDto.getEmail()).isEqualTo(member.getMemberEmail());
     }
 
     @Test
-    void upgradeMember() throws Exception{
+    @DisplayName("상태 변경 - 멤버 없음")
+    void changeStateMemberNotFound() {
+        // Given
+        String memberId = "invalidMemberId";
+        when(memberRepository.findByMemberId(anyString())).thenReturn(Optional.empty());
+
+        // When
+        Throwable thrown = catchThrowable(() -> memberService.changeState(memberId));
+
+        // Then
+        assertThat(thrown)
+                .isInstanceOf(CustomException.class)
+                .hasMessageContaining(ErrorCode.MEMBER_NOT_FOUND.getMessage());
+    }
+
+
+    @Test
+    void upgradeMember() {
 
         String memberId = "testId";
         Long roleId = 2L;
@@ -135,6 +153,8 @@ class MemberServiceTest {
         verify(memberRepository, times(1)).save(any());
     }
 
+
+
     @Test
     void modifyMember() throws Exception {
 
@@ -145,8 +165,6 @@ class MemberServiceTest {
 
         Member member = Member.createMember("memberId", "memberPw", "member@databo3.live", roles, states);
 
-        given(rolesRepository.findById(any())).willReturn(Optional.of(roles));
-        given(statesRepository.findById(any())).willReturn(Optional.of(states));
         given(memberRepository.save(any())).willReturn(member);
 
         Class<UpdateMemberRequestDto> clzz = UpdateMemberRequestDto.class;
@@ -172,13 +190,13 @@ class MemberServiceTest {
 
         UpdateMemberResponseDto updateMemberResponseDto = memberService.modifyMember(updateMemberRequestDto.getId(), updateMemberRequestDto);
 
-        Assertions.assertThat(updateMemberResponseDto.getPassword()).isEqualTo(modifyMember.getMemberPassword());
-        Assertions.assertThat(updateMemberResponseDto.getEmail()).isEqualTo(modifyMember.getMemberEmail());
+        assertThat(updateMemberResponseDto.getPassword()).isEqualTo(modifyMember.getMemberPassword());
+        assertThat(updateMemberResponseDto.getEmail()).isEqualTo(modifyMember.getMemberEmail());
 
     }
 
     @Test
-    void deleteMember() throws Exception {
+    void deleteMember() {
 
         String id = "testId";
 
@@ -199,4 +217,16 @@ class MemberServiceTest {
         memberService.deleteMember(id);
         verify(memberRepository, times(1)).save(member);
     }
+
+    @Test
+    void duplicateId() {
+        Member member = new Member();
+
+        given(memberRepository.findByMemberId(anyString())).willReturn(Optional.of(member));
+
+        boolean result = memberService.requestIdDuplicateCheck(anyString());
+
+        assertThat(result).isTrue();
+    }
+
 }

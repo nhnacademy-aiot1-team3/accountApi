@@ -36,10 +36,17 @@ public interface MemberService {
 
     /**
      * Member 역할 수정 메서드
-     * @param memberId 역할을 수정 할 멤버의 아이디
+     * @param memberId 역할을 수정할 멤버의 아이디
      * @since 1.0.1
      */
     void upgradeRoles(String memberId,Long roleId);
+
+    /**
+     * Member 상태 수정 메서드
+     * @param memberId 상태를 수정할 멤버의 아이디
+     * @since 1.0.1
+     */
+    void changeState(String memberId);
 
     /**
      * Member 수정 메서드
@@ -50,5 +57,18 @@ public interface MemberService {
      */
     UpdateMemberResponseDto modifyMember(String userId, UpdateMemberRequestDto updateMemberRequest);
 
+    /**
+     * 회원 탈퇴 메서드
+     * @param id 탈퇴할 멤버의 아이디
+     * @since 1.0.1
+     */
     void deleteMember(String id);
+
+    /**
+     * 아이디 중복 체크 메서드
+     * @param requestId 중복 체크할 아이디
+     * @return Boolean
+     * @since 1.0.1
+     */
+    Boolean requestIdDuplicateCheck(String requestId);
 }

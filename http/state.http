@@ -1,0 +1,2 @@
+PUT http://localhost:8090/api/account/member/state
+X-USER-ID: testId3
