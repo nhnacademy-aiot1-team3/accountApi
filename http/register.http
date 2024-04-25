@@ -13,7 +13,7 @@ POST http://localhost:8090/api/account/member/register
 Content-Type: application/json
 
 {
-  "id": "testId7",
+  "id": "testId8",
   "password": "testPassword",
   "email": "test@test.com",
   "roles": 3
