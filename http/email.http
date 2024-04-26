@@ -1,0 +1,15 @@
+POST http://localhost:8090/api/account/mail
+Content-Type: application/json
+
+{
+  "email": "insub2004@naver.com"
+}
+
+###
+GET http://localhost:8090/api/account/mail
+Content-Type: application/json
+
+{
+  "email": "insub2004@naver.com",
+  "certificationNumber": "249907"
+}
