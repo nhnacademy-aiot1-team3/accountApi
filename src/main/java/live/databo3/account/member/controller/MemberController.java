@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import live.databo3.account.member.service.MemberService;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 
 /**
@@ -81,15 +82,16 @@ public class MemberController {
     /**
      * Member States 변경을 요청하는 메서드
      * 현재 pause 에서 active 로 변경하는 메서드
-     * @param memberId State 변경을 원하는 멤버의 아이디
+     * @param request 상태 변경할 멤버의 id, email
      * @return ResponseEntity 200 ok, message = success
      */
     @PutMapping("/state")
-    public ResponseEntity<HashMap<String, String>> updateState(@RequestHeader("X-USER-ID") String memberId) {
-        log.info("휴면 상태 해제 아이디 : {}", memberId);
+    public ResponseEntity<HashMap<String, String>> updateState(@Valid @RequestBody UpdateStateRequest request) {
+        log.info("휴면 상태 해제 아이디 : {}", request.getId());
+        log.info("휴면 상태 해제 이메일 : {}", request.getEmail());
 
         //service 추가
-        memberService.changeState(memberId);
+        memberService.changeState(request.getId());
 
         HashMap<String, String> response = new HashMap<>();
         response.put("message", "success");
