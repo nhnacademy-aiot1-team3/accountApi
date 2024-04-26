@@ -1,6 +1,6 @@
 DELETE http://localhost:8090/api/account/member/delete
-X_USER_ID: testId
+X-USER-ID: testId4
 
 ###
 DELETE http://localhost:8090/api/account/member/delete
-X-USER-ID: testId3
+X-USER-ID: testId31

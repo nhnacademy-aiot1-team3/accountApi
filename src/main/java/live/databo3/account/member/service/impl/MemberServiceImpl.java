@@ -87,7 +87,12 @@ public class MemberServiceImpl implements MemberService {
     public JoinResponseDto registerMember(JoinRequestDto request) {
         Roles roles = rolesRepository.findById(request.getRoles()).orElseThrow(() -> new CustomException(ErrorCode.ROLE_NOT_FOUND));
         log.info("회원 가입 권한 : {}", roles);
-        States states = statesRepository.findById(1L).orElseThrow(() -> new CustomException(ErrorCode.STATE_NOT_FOUND));
+        States states;
+        if (roles.getRoleName().equals(Roles.ROLES.ROLE_OWNER)) {
+            states = statesRepository.findById(1L).orElseThrow(() -> new CustomException(ErrorCode.STATE_NOT_FOUND));
+        } else {
+            states = statesRepository.findById(2L).orElseThrow(() -> new CustomException(ErrorCode.STATE_NOT_FOUND));
+        }
         log.info("회원 가입 상태 : {}", states);
 
         Member member = Member.createMember(request.getId(), passwordEncoder.encode(request.getPassword()), request.getEmail(), roles, states);

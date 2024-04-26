@@ -1,14 +1,15 @@
 package live.databo3.account.error;
 
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
-
+@Setter
 @Getter
-@Builder
-public class ErrorResponse {
-    private int code;
-    private String message;
-    private LocalDateTime localDateTime;
+@NoArgsConstructor
+public class ErrorResponse<T, S> {
+
+    private T headers;
+    private S body;
+
 }
