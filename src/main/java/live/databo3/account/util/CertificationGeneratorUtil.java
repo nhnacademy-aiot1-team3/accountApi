@@ -1,8 +1,11 @@
 package live.databo3.account.util;
 
+import org.springframework.stereotype.Component;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+@Component
 public class CertificationGeneratorUtil {
     public String createCertificationNumber() throws NoSuchAlgorithmException {
         String result;
