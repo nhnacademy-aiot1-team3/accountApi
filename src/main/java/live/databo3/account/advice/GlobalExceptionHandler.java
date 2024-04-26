@@ -5,6 +5,8 @@ import live.databo3.account.error.ErrorResponse;
 import live.databo3.account.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -26,6 +28,25 @@ public class GlobalExceptionHandler {
                                                     .build();
 
         return ResponseEntity.status(errorCode.getCode()).body(errorResponse);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        log.info("Advisor(CustomException) run code : {}", ex.getBindingResult());
+
+        StringBuilder message = new StringBuilder();
+
+        for(FieldError error : ex.getFieldErrors()) {
+            message.append(error.getField()).append(": (").append(error.getDefaultMessage()).append(") ");
+        }
+
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .code(ErrorCode.METHOD_ARGUMENT_ERROR.getCode())
+                .message(message.toString())
+                .localDateTime(LocalDateTime.now())
+                .build();
+
+        return ResponseEntity.status(errorResponse.getCode()).body(errorResponse);
     }
 
 }
