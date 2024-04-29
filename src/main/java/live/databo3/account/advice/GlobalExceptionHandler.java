@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
                                 .build();
 
         ErrorResponse<ErrorHeader, ErrorBody> error = new ErrorResponse<>();
-        error.setHeaders(errorHeader);
+        error.setHeader(errorHeader);
         error.setBody(errorBody);
 
         return ResponseEntity.status(errorCode.getCode()).body(error);
@@ -57,7 +57,7 @@ public class GlobalExceptionHandler {
                 .build();
 
         ErrorResponse<ErrorHeader, ErrorBody> error = new ErrorResponse<>();
-        error.setHeaders(errorHeader);
+        error.setHeader(errorHeader);
         error.setBody(null);
 
         return ResponseEntity.status(errorHeader.getResultCode()).body(error);
