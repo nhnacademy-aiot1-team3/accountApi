@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ErrorResponse<T, S> {
 
-    private T headers;
+    private T header;
     private S body;
 
 }
