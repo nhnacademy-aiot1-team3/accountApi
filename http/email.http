@@ -1,4 +1,4 @@
-POST http://localhost:8090/api/account/mail
+POST http://localhost:8090/api/account/member/email
 Content-Type: application/json
 
 {
@@ -6,7 +6,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8090/api/account/mail
+GET http://localhost:8090/api/account/member/email
 Content-Type: application/json
 
 {

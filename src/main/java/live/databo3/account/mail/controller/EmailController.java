@@ -21,7 +21,7 @@ public class EmailController {
 
     private final MailService mailService;
 
-    @PostMapping
+    @PostMapping("/send")
     public ResponseEntity<Map<String,String>> sendEmail(@Valid @RequestBody EmailCertificationRequest request) throws MessagingException, NoSuchAlgorithmException {
 
         mailService.sendMail(request.getEmail());
@@ -30,7 +30,7 @@ public class EmailController {
         return ResponseEntity.ok().body(message);
     }
 
-    @GetMapping
+    @PostMapping("/verify")
     public ResponseEntity<Map<String, String>> verifyCertificationNumber(@Valid @RequestBody EmailAndCertificationNumberRequest request) {
 
         mailService.verifyCertificationNumber(request.getEmail(), request.getCertificationNumber());
