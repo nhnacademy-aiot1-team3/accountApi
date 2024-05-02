@@ -1,7 +1,7 @@
 package live.databo3.account.organization.controller;
 
 import live.databo3.account.organization.dto.GetOrgsResponse;
-import live.databo3.account.organization.dto.ModifyOrgsResponse;
+import live.databo3.account.organization.dto.ModifyOrgsRequest;
 import live.databo3.account.organization.dto.OrgsRequest;
 import live.databo3.account.organization.service.OrganizationService;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +15,7 @@ import java.util.List;
 /**
  * 조직 관련 요청을 처리하는 Controller
  * @author jihyeon
+ * @version 1.0.1
  */
 @RestController
 @RequiredArgsConstructor
@@ -37,6 +38,7 @@ public class OrganizationController {
      * 특정 조직을 가져오는 method
      * @param organizationId 가져오길 원하는 조직 id
      * @return GetOrgsResponse(id, name, gateway SerialNumber, controller SerialNumber)
+     * @since 1.0.0
      */
     @GetMapping("/organizations/{organizationId}")
     public ResponseEntity<GetOrgsResponse> getOrganization(@PathVariable Integer organizationId) {
@@ -47,7 +49,7 @@ public class OrganizationController {
     /**
      * 새로운 조직을 추가하는 method
      * @param request id를 제외한 모든 정보(name, gateway serial number, controller serial number)
-     * @return ResponseEntity 204
+     * @return ResponseEntity 201, message: success
      * @since 1.0.0
      */
     @PostMapping(value = "/organizations")
@@ -59,28 +61,33 @@ public class OrganizationController {
     }
 
     /**
-     * 기존 조직 정보를 수정하는 method
-     * @param request 수정할 내용이 담긴 RequestDto
-     * @return 수정한 Organization return
+     * 기존 조직의 이름을 수정하는 method
+     * @param request ModifyOrgsRequest (OrganizationName)
+     * @return ResponseEntity 204, message: success
      * @since 1.0.0
      */
     @PutMapping("/organizations/{organizationId}")
-    public ResponseEntity<ModifyOrgsResponse> putOrganization(@PathVariable("organizationId") Integer organizationId, @RequestBody OrgsRequest request) {
-        ModifyOrgsResponse organization = organizationService.modifyOrganization(organizationId, request);
-        return ResponseEntity.ok(organization);
+    public ResponseEntity<HashMap<String, String>> putOrganization(@PathVariable("organizationId") Integer organizationId, @RequestBody ModifyOrgsRequest request) {
+        organizationService.modifyOrganization(organizationId, request);
+        HashMap<String, String> response = new HashMap<>();
+        response.put("message", "success");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 
     /**
      * 특정 조직 삭제 method
      * @param organizationId 삭제하고픈 조직 id
-     * @return ResponseEntity 204
+     * @return ResponseEntity 204, message: success
+     * @since 1.0.0
      */
     @DeleteMapping("/organizations/{organizationId}")
-    public ResponseEntity<Void> deleteOrganization(@PathVariable("organizationId") Integer organizationId) {
+    public ResponseEntity<HashMap<String, String>> deleteOrganization(@PathVariable("organizationId") Integer organizationId) {
         organizationService.deleteOrganization(organizationId);
-        return ResponseEntity.noContent().build();
+        HashMap<String, String> response = new HashMap<>();
+        response.put("message", "success");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 
-    // TODO gateway serialNumber CRUD, controller serialNumber CRUD 만들기
+    // TODO gateway serialNumber CRUD, controller serialNumber update, delete 만들기
 
 }
