@@ -31,6 +31,6 @@ Accept: application/json
 }
 
 ### 조직 삭제
-POST localhost:8090/api/account/organizations/delete/19
-Content-Type: application/json
-Accept: application/json
+DELETE localhost:8090/api/account/organizations/18
+#Content-Type: application/json
+#Accept: application/json

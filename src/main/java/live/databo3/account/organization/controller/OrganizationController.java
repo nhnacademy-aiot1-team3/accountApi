@@ -75,11 +75,12 @@ public class OrganizationController {
      * @param organizationId 삭제하고픈 조직 id
      * @return ResponseEntity 204
      */
-    @PostMapping("/organizations/delete/{organizationId}")
+    @DeleteMapping("/organizations/{organizationId}")
     public ResponseEntity<Void> deleteOrganization(@PathVariable("organizationId") Integer organizationId) {
         organizationService.deleteOrganization(organizationId);
         return ResponseEntity.noContent().build();
     }
 
     // TODO gateway serialNumber CRUD, controller serialNumber CRUD 만들기
+
 }
