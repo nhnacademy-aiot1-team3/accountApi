@@ -3,7 +3,7 @@ package live.databo3.account.organization.service.impl;
 import live.databo3.account.error.ErrorCode;
 import live.databo3.account.exception.CustomException;
 import live.databo3.account.organization.dto.GetOrgsResponse;
-import live.databo3.account.organization.dto.ModifyOrgsResponse;
+import live.databo3.account.organization.dto.ModifyOrgsRequest;
 import live.databo3.account.organization.dto.OrgsRequest;
 import live.databo3.account.organization.entity.Organization;
 import live.databo3.account.organization.repository.MemberOrgsRepository;
@@ -14,13 +14,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
  * OrganizationService의 구현체
  * @author jihyeon
- * @version 1.0.0
+ * @version 1.0.1
  */
 @Service
 @RequiredArgsConstructor
@@ -94,7 +93,27 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     /**
-     * 특정 조직을 삭제
+     * organization이 db에 없을 경우 exception (ORGANIZATION_NOT_FOUND)띄움
+     * 있을 경우 조직 이름을 변경된 값으로 바꾼 후 저장
+     * @param request ModifyOrgsRequest (OrganizationName)
+     * @since 1.0.0
+     */
+    @Override
+    public void modifyOrganization(Integer organizationId, ModifyOrgsRequest request) {
+        Optional<Organization> organizationOptional = organizationRepository.findById(organizationId);
+        if(organizationOptional.isEmpty()) {
+            throw new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND);
+        }
+        Organization organization = organizationOptional.get();
+        String organizationName = request.getOrganizationName();
+
+        organization.setOrganizationName(organizationName);
+        organizationRepository.save(organization);
+
+    }
+
+    /**
+     * 특정 조직을 삭제, 조직에 속한 member들 관계 리스트 삭제
      * @param organizationId 삭제하고자 하는 조직 id
      * @since 1.0.0
      */
@@ -106,42 +125,4 @@ public class OrganizationServiceImpl implements OrganizationService {
         organizationRepository.delete(organization);
     }
 
-    /**
-     * organization이 db에 없을 경우 exception 띄움
-     * 있을 경우 변경된 값으로 바꾼 후 저장
-     * @param request OrgsRequest(name, gatewaySn, controllerSn)
-     * @return ModifyOrgResponse(id, name, gatewaySn, controllerSn)
-     * @since 1.0.0
-     */
-    @Override
-    public ModifyOrgsResponse modifyOrganization(Integer organizationId, OrgsRequest request) {
-        Optional<Organization> organizationOptional = organizationRepository.findById(organizationId);
-        if(organizationOptional.isEmpty()) {
-            throw new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND);
-        }
-        Organization organization = organizationOptional.get();
-        String organizationName = organization.getOrganizationName();
-        String gatewaySn = organization.getGatewaySn();
-        String controllerSn = organization.getControllerSn();
-
-        if(Objects.nonNull(request.getControllerSn())) {
-            organizationName = request.getOrganizationName();
-        }
-        if(Objects.nonNull(request.getGatewaySn())) {
-            gatewaySn = request.getGatewaySn();
-        }
-        if(Objects.nonNull(request.getControllerSn())) {
-            controllerSn = request.getControllerSn();
-        }
-
-        organization.change(organizationName, gatewaySn, controllerSn);
-        Organization modifyOrgs = organizationRepository.save(organization);
-
-        return ModifyOrgsResponse.builder()
-                .organizationId(modifyOrgs.getOrganizationId())
-                .organizationName(modifyOrgs.getOrganizationName())
-                .gatewaySn(modifyOrgs.getGatewaySn())
-                .controllerSn(modifyOrgs.getControllerSn())
-                .build();
-    }
 }
