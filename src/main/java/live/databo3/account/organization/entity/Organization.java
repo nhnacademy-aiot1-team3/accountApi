@@ -3,6 +3,7 @@ package live.databo3.account.organization.entity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -16,12 +17,15 @@ public class Organization {
     @Column
     private Integer organizationId;
 
+    @Setter
     @Column
     private String organizationName;
 
+    @Setter
     @Column
     private String gatewaySn;
 
+    @Setter
     @Column
     private String controllerSn;
 
@@ -33,9 +37,4 @@ public class Organization {
         this.controllerSn = controllerSn;
     }
 
-    public void change(String organizationName, String gatewaySn, String controllerSn) {
-        this.organizationName = organizationName;
-        this.gatewaySn = gatewaySn;
-        this.controllerSn = controllerSn;
-    }
 }
