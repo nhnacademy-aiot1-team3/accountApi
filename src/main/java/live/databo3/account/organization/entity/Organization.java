@@ -33,8 +33,7 @@ public class Organization {
         this.controllerSn = controllerSn;
     }
 
-    public void change(Integer organizationId, String organizationName, String gatewaySn, String controllerSn) {
-        this.organizationId = organizationId;
+    public void change(String organizationName, String gatewaySn, String controllerSn) {
         this.organizationName = organizationName;
         this.gatewaySn = gatewaySn;
         this.controllerSn = controllerSn;
