@@ -1,0 +1,36 @@
+### 조직 추가
+POST localhost:8090/api/account/organizations
+Content-Type: application/json
+Accept: application/json
+
+{
+  "organizationName": "nhn qwer",
+  "gatewaySn": null,
+  "controllerSn": null
+}
+
+### 모든 조직 조회
+GET localhost:8090/api/account/organizations
+Content-Type: application/json
+Accept: application/json
+
+### 특정 조직
+GET localhost:8090/api/account/organizations/18
+Content-Type: application/json
+Accept: application/json
+
+### 조직 수정
+PUT localhost:8090/api/account/organizations/11
+Content-Type: application/json
+Accept: application/json
+
+{
+  "organizationName": "nhn 김해",
+  "gatewaySn": null,
+  "controllerSn": null
+}
+
+### 조직 삭제
+POST localhost:8090/api/account/organizations/delete/19
+Content-Type: application/json
+Accept: application/json
