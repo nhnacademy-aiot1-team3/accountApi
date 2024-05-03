@@ -1,8 +1,6 @@
 package live.databo3.account.organization.controller;
 
-import live.databo3.account.organization.dto.GetOrgsResponse;
-import live.databo3.account.organization.dto.ModifyOrgsRequest;
-import live.databo3.account.organization.dto.OrgsRequest;
+import live.databo3.account.organization.dto.*;
 import live.databo3.account.organization.service.OrganizationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -88,6 +86,47 @@ public class OrganizationController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 
-    // TODO gateway serialNumber CRUD, controller serialNumber update, delete 만들기
+    /**
+     * gateway SerialNumber, controller SerialNumber 중 바꾸고 싶은 값을 변경
+     * @param organizationId 변경하고픈 gatewaySn 혹은 controllerSn를 가진 조직 id
+     * @param request PutGatewayOrControllerDto(gatewaySn, controllerSn)
+     * @return ResponseEntity 204, message: success
+     * @since 1.0.1
+     */
+    @PutMapping("/organizations/{organizationId}/gatewayAndController")
+    public ResponseEntity<HashMap<String, String>> putGatewayOrController(@PathVariable Integer organizationId, @RequestBody PutGatewayOrControllerDto request) {
+        organizationService.putSerialNumber(organizationId, request);
+        HashMap<String, String> response = new HashMap<>();
+        response.put("message", "success");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+    }
+
+    /**
+     * gateway SerialNumber 삭제
+     * @param organizationId 삭제하고픈 gateway SerialNumber를 가진 조직 id
+     * @return ResponseEntity 204, message: success
+     * @since 1.0.1
+     */
+    @DeleteMapping("/organizations/{organizationId}/gateway")
+    public ResponseEntity<HashMap<String, String>> deleteGateway(@PathVariable Integer organizationId) {
+        organizationService.deleteGatewaySn(organizationId);
+        HashMap<String, String> response = new HashMap<>();
+        response.put("message", "success");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+    }
+
+    /**
+     * controller SerialNumber 삭제
+     * @param organizationId 삭제하고픈 controller SerialNumber를 가진 조직 id
+     * @return ResponseEntity 204, message: success
+     * @since 1.0.1
+     */
+    @DeleteMapping("/organizations/{organizationId}/controller")
+    public ResponseEntity<HashMap<String, String>> deleteController(@PathVariable Integer organizationId) {
+        organizationService.deleteControllerSn(organizationId);
+        HashMap<String, String> response = new HashMap<>();
+        response.put("message", "success");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+    }
 
 }

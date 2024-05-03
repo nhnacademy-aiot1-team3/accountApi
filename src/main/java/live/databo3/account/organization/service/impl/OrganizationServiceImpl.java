@@ -5,6 +5,7 @@ import live.databo3.account.exception.CustomException;
 import live.databo3.account.organization.dto.GetOrgsResponse;
 import live.databo3.account.organization.dto.ModifyOrgsRequest;
 import live.databo3.account.organization.dto.OrgsRequest;
+import live.databo3.account.organization.dto.PutGatewayOrControllerDto;
 import live.databo3.account.organization.entity.Organization;
 import live.databo3.account.organization.repository.MemberOrgsRepository;
 import live.databo3.account.organization.repository.OrganizationRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -124,5 +126,54 @@ public class OrganizationServiceImpl implements OrganizationService {
         memberOrgsRepository.deleteAllByOrganization(organization);
         organizationRepository.delete(organization);
     }
+
+    /**
+     * gateway SerialNumber, controllerSerialNumber 중 바꾸고 싶은 것을 변경함
+     * @param organizationId 수정하고픈 조직의 아이디
+     * @param request PutGatewayOrControllerDto(gateway SerialNumber, controller SerialNumber)
+     */
+    @Override
+    public void putSerialNumber(Integer organizationId, PutGatewayOrControllerDto request) {
+        Optional<Organization> organizationOptional = organizationRepository.findById(organizationId);
+        if(organizationOptional.isEmpty()) {
+            throw new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND);
+        }
+        if(Objects.nonNull(request.getGatewaySn())){
+            organizationOptional.get().setGatewaySn(request.getGatewaySn());
+        }
+        if(Objects.nonNull(request.getControllerSn())){
+            organizationOptional.get().setControllerSn(request.getControllerSn());
+        }
+        organizationRepository.save(organizationOptional.get());
+    }
+
+    /**
+     * 특정 조직이 가진 gateway Serial Number를 삭제
+     * @param organizationId 특정 조직의 id
+     */
+    @Override
+    public void deleteGatewaySn(Integer organizationId) {
+        Optional<Organization> organizationOptional = organizationRepository.findById(organizationId);
+        if(organizationOptional.isEmpty()) {
+            throw new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND);
+        }
+        organizationOptional.get().setGatewaySn(null);
+        organizationRepository.save(organizationOptional.get());
+    }
+
+    /**
+     * 특정 조직이 가진 controller Serial Number를 삭제
+     * @param organizationId 특정 조직의 id
+     */
+    @Override
+    public void deleteControllerSn(Integer organizationId) {
+        Optional<Organization> organizationOptional = organizationRepository.findById(organizationId);
+        if(organizationOptional.isEmpty()) {
+            throw new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND);
+        }
+        organizationOptional.get().setControllerSn(null);
+        organizationRepository.save(organizationOptional.get());
+    }
+
 
 }
