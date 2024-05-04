@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import live.databo3.account.organization.dto.GetOrgsResponse;
 import live.databo3.account.organization.dto.ModifyOrgsRequest;
 import live.databo3.account.organization.dto.OrgsRequest;
+import live.databo3.account.organization.dto.PutGatewayOrControllerDto;
 import live.databo3.account.organization.service.OrganizationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -134,5 +135,88 @@ class OrganizationControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    @DisplayName("gatewaySn & ControllerSn Test")
+    void putGatewaySnAndControllerSn() throws Exception {
+        PutGatewayOrControllerDto dto = PutGatewayOrControllerDto.builder()
+                .gatewaySn("gatewaySn")
+                .controllerSn("controllerSn").build();
+        String content = new ObjectMapper().writeValueAsString(dto);
+        Integer organizationId = 1;
 
+        doNothing().when(organizationService).putSerialNumber(any(Integer.class), any());
+
+        mockMvc.perform(put("/api/account/organizations/" + organizationId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content))
+                .andExpect(status().isNoContent())
+                .andExpect(jsonPath("message").value("success"))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("only put gatewaySn")
+    void putOnlyGatewaySn() throws Exception {
+        PutGatewayOrControllerDto dto = PutGatewayOrControllerDto.builder()
+                .gatewaySn("gatewaySn")
+                .controllerSn(null).build();
+        String content = new ObjectMapper().writeValueAsString(dto);
+        Integer organizationId = 1;
+
+        doNothing().when(organizationService).putSerialNumber(any(Integer.class), any());
+
+        mockMvc.perform(put("/api/account/organizations/" + organizationId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content))
+                .andExpect(status().isNoContent())
+                .andExpect(jsonPath("message").value("success"))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("only put controllerSn")
+    void putOnlyControllerSn() throws Exception {
+        PutGatewayOrControllerDto dto = PutGatewayOrControllerDto.builder()
+                .gatewaySn(null)
+                .controllerSn("controllerSn").build();
+        String content = new ObjectMapper().writeValueAsString(dto);
+        Integer organizationId = 1;
+
+        doNothing().when(organizationService).putSerialNumber(any(Integer.class), any());
+
+        mockMvc.perform(put("/api/account/organizations/" + organizationId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(content))
+                .andExpect(status().isNoContent())
+                .andExpect(jsonPath("message").value("success"))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("gatewaySn 삭제")
+    void deleteGatewaySn() throws Exception {
+        Integer organizationId = 1;
+
+        doNothing().when(organizationService).deleteOrganization(any(Integer.class));
+
+        mockMvc.perform(delete("/api/account/organizations/" + organizationId + "/gateway"))
+                .andExpect(status().isNoContent())
+                .andExpect(jsonPath("message").value("success"))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("controllerSn 삭제")
+    void deleteControllerSn() throws Exception {
+        Integer organizationId = 1;
+
+        doNothing().when(organizationService).deleteOrganization(any(Integer.class));
+
+        mockMvc.perform(delete("/api/account/organizations/" + organizationId + "/controller"))
+                .andExpect(status().isNoContent())
+                .andExpect(jsonPath("message").value("success"))
+                .andDo(print());
+    }
 }
+
+
