@@ -106,6 +106,10 @@ public class OrganizationServiceImpl implements OrganizationService {
         if(organizationOptional.isEmpty()) {
             throw new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND);
         }
+        Optional<Organization> optionalName = organizationRepository.findByOrganizationName(request.getOrganizationName());
+        if(optionalName.isPresent() && !organizationId.equals(optionalName.get().getOrganizationId())) {
+            throw new CustomException(ErrorCode.ORGANIZATION_ALREADY_EXIST);
+        }
         Organization organization = organizationOptional.get();
         String organizationName = request.getOrganizationName();
 
