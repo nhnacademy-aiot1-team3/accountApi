@@ -7,7 +7,7 @@ import live.databo3.account.organization.dto.ModifyOrgsRequest;
 import live.databo3.account.organization.dto.OrgsRequest;
 import live.databo3.account.organization.dto.PutGatewayOrControllerDto;
 import live.databo3.account.organization.entity.Organization;
-import live.databo3.account.organization.repository.MemberOrgsRepository;
+import live.databo3.account.memberOrgs.repository.MemberOrgsRepository;
 import live.databo3.account.organization.repository.OrganizationRepository;
 import live.databo3.account.organization.service.OrganizationService;
 import lombok.RequiredArgsConstructor;

@@ -1,9 +1,11 @@
-package live.databo3.account.organization.entity;
+package live.databo3.account.memberOrgs.entity;
 
 import live.databo3.account.member.entity.Member;
+import live.databo3.account.organization.entity.Organization;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -16,6 +18,7 @@ public class MemberOrg {
     @Column
     private Long recordId;
 
+    @Setter
     @Column
     private Integer state;
 

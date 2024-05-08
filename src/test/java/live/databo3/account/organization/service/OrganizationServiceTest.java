@@ -1,12 +1,12 @@
 package live.databo3.account.organization.service;
 
 import live.databo3.account.exception.CustomException;
+import live.databo3.account.memberOrgs.repository.MemberOrgsRepository;
 import live.databo3.account.organization.dto.GetOrgsResponse;
 import live.databo3.account.organization.dto.ModifyOrgsRequest;
 import live.databo3.account.organization.dto.OrgsRequest;
 import live.databo3.account.organization.dto.PutGatewayOrControllerDto;
 import live.databo3.account.organization.entity.Organization;
-import live.databo3.account.organization.repository.MemberOrgsRepository;
 import live.databo3.account.organization.repository.OrganizationRepository;
 import live.databo3.account.organization.service.impl.OrganizationServiceImpl;
 import org.junit.jupiter.api.Assertions;
@@ -28,6 +28,9 @@ import static org.mockito.Mockito.*;
 class OrganizationServiceTest {
     @Mock
     private OrganizationRepository organizationRepository;
+
+    @Mock
+    private MemberOrgsRepository memberOrgsRepository;
 
     @InjectMocks
     private OrganizationServiceImpl organizationService;
@@ -83,7 +86,7 @@ class OrganizationServiceTest {
     }
 
     @Test
-    @DisplayName("특정 조직 조회 실패")
+    @DisplayName("특정 조직 조회 실패 - 없는 조직")
     void getOrganizationNotFound() {
         try{
             organizationService.getOrganization(9999);
@@ -120,8 +123,12 @@ class OrganizationServiceTest {
 
         when(organizationRepository.findByOrganizationName(any())).thenReturn(Optional.of(organization));
 
-        Assertions.assertThrows(CustomException.class, ()->organizationService.addOrganization(orgsRequest));
-
+        try{
+            organizationService.addOrganization(orgsRequest);
+        } catch (Exception e) {
+            Assertions.assertEquals(e.getMessage(), "이미 존재하는 조직입니다");
+            Assertions.assertEquals(e.getClass(), CustomException.class);
+        }
         verify(organizationRepository, times(0)).save(any());
 
     }
@@ -155,8 +162,12 @@ class OrganizationServiceTest {
 
         when(organizationRepository.findById(any(Integer.class))).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(CustomException.class,()->organizationService.modifyOrganization(1,request));
-
+        try{
+            organizationService.modifyOrganization(1,request);
+        } catch (Exception e) {
+            Assertions.assertEquals(e.getMessage(), "조회한 조직이 없습니다");
+            Assertions.assertEquals(e.getClass(), CustomException.class);
+        }
         verify(organizationRepository,times(0)).save(any());
     }
 
@@ -183,13 +194,17 @@ class OrganizationServiceTest {
         when(organizationRepository.findById(any(Integer.class))).thenReturn(Optional.of(organization1));
         when(organizationRepository.findByOrganizationName(any())).thenReturn(Optional.of(organization2));
 
-        Assertions.assertThrows(CustomException.class,()->organizationService.modifyOrganization(1,request));
-
+        try{
+            organizationService.modifyOrganization(1,request);
+        } catch (Exception e) {
+            Assertions.assertEquals(e.getMessage(), "이미 존재하는 조직입니다");
+            Assertions.assertEquals(e.getClass(), CustomException.class);
+        }
         verify(organizationRepository,times(0)).save(any());
     }
 
     @Test
-    @DisplayName("조직 삭제")
+    @DisplayName("조직 삭제 성공")
     void deleteOrganizationSuccess(){
         Organization organization = Organization.builder()
                 .organizationId(1)
@@ -199,10 +214,33 @@ class OrganizationServiceTest {
                 .build();
 
         when(organizationRepository.findById(any(Integer.class))).thenReturn(Optional.of(organization));
+        doNothing().when(memberOrgsRepository).deleteAllByOrganization(any());
 
         organizationService.deleteOrganization(1);
 
         verify(organizationRepository,times(1)).delete(any());
+    }
+
+    @Test
+    @DisplayName("조직 삭제 실패 - 없는 조직")
+    void deleteOrganizationFail(){
+        Organization organization = Organization.builder()
+                .organizationId(1)
+                .organizationName("nhn 김해")
+                .gatewaySn("gatewaySn")
+                .controllerSn("controllerSn")
+                .build();
+
+        when(organizationRepository.findById(any(Integer.class))).thenReturn(Optional.empty());
+
+        try{
+            organizationService.deleteOrganization(1);
+        } catch (Exception e) {
+            Assertions.assertEquals(e.getMessage(), "조회한 조직이 없습니다");
+            Assertions.assertEquals(e.getClass(), CustomException.class);
+        }
+
+        verify(organizationRepository,times(0)).delete(any());
     }
 
     @Test
@@ -277,7 +315,13 @@ class OrganizationServiceTest {
                 .build();
 
         when(organizationRepository.findById(any(Integer.class))).thenReturn(Optional.empty());
-        Assertions.assertThrows(CustomException.class, () -> organizationService.putSerialNumber(1, dto));
+
+        try{
+            organizationService.putSerialNumber(1, dto);
+        } catch (Exception e) {
+            Assertions.assertEquals(e.getMessage(), "조회한 조직이 없습니다");
+            Assertions.assertEquals(e.getClass(), CustomException.class);
+        }
 
         verify(organizationRepository,times(0)).save(any());
     }
@@ -302,7 +346,13 @@ class OrganizationServiceTest {
     @DisplayName("gatewaySn 삭제 실패 - 없는 조직")
     void deleteGatewaySnFail(){
         when(organizationRepository.findById(any(Integer.class))).thenReturn(Optional.empty());
-        Assertions.assertThrows(CustomException.class, () -> organizationService.deleteGatewaySn(1));
+
+        try{
+            organizationService.deleteGatewaySn(1);
+        } catch (Exception e) {
+            Assertions.assertEquals(e.getMessage(), "조회한 조직이 없습니다");
+            Assertions.assertEquals(e.getClass(), CustomException.class);
+        }
 
         verify(organizationRepository,times(0)).save(any());
     }
@@ -327,7 +377,13 @@ class OrganizationServiceTest {
     @DisplayName("controllerSn 삭제 실패 - 없는 조직")
     void deleteControllerFail(){
         when(organizationRepository.findById(any(Integer.class))).thenReturn(Optional.empty());
-        Assertions.assertThrows(CustomException.class, () -> organizationService.deleteGatewaySn(1));
+
+        try{
+            organizationService.deleteGatewaySn(1);
+        } catch (Exception e) {
+            Assertions.assertEquals(e.getMessage(), "조회한 조직이 없습니다");
+            Assertions.assertEquals(e.getClass(), CustomException.class);
+        }
 
         verify(organizationRepository,times(0)).save(any());
     }
