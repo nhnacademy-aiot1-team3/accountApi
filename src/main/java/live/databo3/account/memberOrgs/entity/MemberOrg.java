@@ -15,11 +15,10 @@ import javax.persistence.*;
 @Table(name = "member_orgs")
 public class MemberOrg {
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column (name = "record_id")
     private Long recordId;
 
-    @Setter
     @Column (name = "state")
     private Integer state;
 
@@ -36,5 +35,9 @@ public class MemberOrg {
         this.state = state;
         this.member = member;
         this.organization = organization;
+    }
+
+    public void updateState(Integer state) {
+        this.state = state;
     }
 }

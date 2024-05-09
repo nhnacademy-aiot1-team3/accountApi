@@ -141,7 +141,7 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
         MemberOrg memberOrg = memberOrgsRepository.findByOrganization_OrganizationIdAndMember_MemberId(organizationId, memberId)
                 .orElseThrow(()-> new CustomException(ErrorCode.MEMBERORG_NOT_FOUND));
 
-        memberOrg.setState(state);
+        memberOrg.updateState(state);
         memberOrgsRepository.save(memberOrg);
     }
 
