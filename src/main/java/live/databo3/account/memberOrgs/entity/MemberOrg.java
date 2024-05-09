@@ -12,14 +12,15 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "member_org")
 public class MemberOrg {
     @Id
     @GeneratedValue
-    @Column
+    @Column (name = "record_id")
     private Long recordId;
 
     @Setter
-    @Column
+    @Column (name = "state")
     private Integer state;
 
     @ManyToOne
