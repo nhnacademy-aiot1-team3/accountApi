@@ -20,8 +20,8 @@ public class MemberOrgsController {
 
     // TODO user가  organization에 속해있는가 & state가 approve 상태인가 확인
     //TODO GET 멤버, 조직 조회로 현 상태 들고 오기
-    @GetMapping("/organizations/{organizationId}/members")
-    public ResponseEntity<Boolean> booleanMemberOrgs(@PathVariable Integer organizationId, @RequestHeader("X-USER-ID") String memberId) {
+    @GetMapping("/organizations/{organizationId}/members/{memberId}")
+    public ResponseEntity<Boolean> booleanMemberOrgs(@PathVariable Integer organizationId, @PathVariable String memberId) {
         Boolean response = memberOrgsService.booleanMemberOrgs(organizationId, memberId);
         return ResponseEntity.ok(response);
     }
