@@ -14,19 +14,19 @@ import javax.persistence.*;
 public class Organization {
     @Id
     @GeneratedValue
-    @Column
+    @Column (name = "organization_id")
     private Integer organizationId;
 
     @Setter
-    @Column
+    @Column (name = "organization_name")
     private String organizationName;
 
     @Setter
-    @Column
+    @Column (name = "gateway_sn")
     private String gatewaySn;
 
     @Setter
-    @Column
+    @Column (name = "controller_sn")
     private String controllerSn;
 
     @Builder
