@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "member_org")
+@Table(name = "member_orgs")
 public class MemberOrg {
     @Id
     @GeneratedValue
