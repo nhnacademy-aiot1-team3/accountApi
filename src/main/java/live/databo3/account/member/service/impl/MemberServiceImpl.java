@@ -15,13 +15,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import live.databo3.account.member.repository.MemberRepository;
 import live.databo3.account.member.service.MemberService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * MemberService의 구현체
- * @author insub
+ * @author insub, 양현성
  * @version 1.0.1
  */
 @Service
@@ -198,5 +200,34 @@ public class MemberServiceImpl implements MemberService {
 
         Member member = memberRepository.findByMemberId(requestId).orElse(null);
         return Objects.nonNull(member);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<MemberDto> getMemberList() {
+        return memberRepository.getMemberList().orElse(null);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<MemberDto> getMemberList(Long roleId,Long stateId) {
+        return memberRepository.getMemberList(roleId,stateId).orElse(null);
+    }
+
+    @Transactional
+    @Override
+    public void modifyMemberState(String memberId, Long stateId) {
+        Member member = memberRepository.findByMemberId(memberId).orElse(null);
+        log.info("{}",member);
+        if(Objects.nonNull(member)) {
+            States states = statesRepository.findById(stateId).orElse(null);
+            log.info("{}",states);
+            member.modifyState(states);
+            log.info("{}",member);
+        }
     }
 }

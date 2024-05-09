@@ -3,9 +3,11 @@ package live.databo3.account.member.service;
 
 import live.databo3.account.member.dto.*;
 
+import java.util.List;
+
 /**
  * 멤버와 관련된 요청 처리하는 Service interface
- * @author insub
+ * @author insub, 양현성
  * @version 1.0.1
  */
 public interface MemberService {
@@ -71,4 +73,18 @@ public interface MemberService {
      * @since 1.0.1
      */
     Boolean requestIdDuplicateCheck(String requestId);
+
+    /**
+     * 멤버 전체 조회 메서드
+     * @return MemberDto 로 이뤄진 List
+     */
+    List<MemberDto> getMemberList();
+
+    /**
+     * 입력받은 roleId,statId와 맞는 멤버 전체 조회 메서드
+     * @return MemberDto 로 이뤄진 List
+     */
+    List<MemberDto> getMemberList(Long roleId,Long stateId);
+
+    void modifyMemberState(String memberId,Long stateId);
 }
