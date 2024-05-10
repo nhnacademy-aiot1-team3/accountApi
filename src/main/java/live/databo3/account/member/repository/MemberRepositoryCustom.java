@@ -13,10 +13,6 @@ import java.util.Optional;
 
 @NoRepositoryBean
 public interface MemberRepositoryCustom {
-    /**
-     * @return 멤버 전체
-     */
-    Optional<List<MemberDto>> getMemberList();
 
     /**
      * roleId 와 stateId 를 입력받아 해당하는 멤버 전체 조회하는 메서드

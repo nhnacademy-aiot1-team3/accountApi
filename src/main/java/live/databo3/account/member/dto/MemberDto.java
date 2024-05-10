@@ -3,11 +3,13 @@ package live.databo3.account.member.dto;
 import live.databo3.account.member.entity.Roles;
 import live.databo3.account.member.entity.States;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
+@Builder
 @AllArgsConstructor
 public class MemberDto {
     private Long number;

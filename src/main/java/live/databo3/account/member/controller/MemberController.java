@@ -146,20 +146,13 @@ public class MemberController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<MemberDto>> getAllMembers() {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(memberService.getMemberList());
-    }
-
-    @GetMapping("/list/{roleId}/{stateId}")
-    public ResponseEntity<List<MemberDto>> getFilteredMembers(@PathVariable("roleId") Long roleId, @PathVariable("stateId") Long stateId) {
+    public ResponseEntity<List<MemberDto>> getMembers(@RequestParam(value = "roleId",required = false) Long roleId, @RequestParam(value = "stateId",required = false) Long stateId) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(memberService.getMemberList(roleId, stateId));
     }
 
-    @PostMapping("/modify/state")
+    @PutMapping("/modify/state")
     public ResponseEntity<Void> modifyMemberState(@RequestBody UpdateMemberStateRequestDto requestDto) {
         memberService.modifyMemberState(requestDto.getMemberId(), requestDto.getStateId());
         return ResponseEntity.ok().build();

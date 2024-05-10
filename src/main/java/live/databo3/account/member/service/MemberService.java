@@ -75,16 +75,16 @@ public interface MemberService {
     Boolean requestIdDuplicateCheck(String requestId);
 
     /**
-     * 멤버 전체 조회 메서드
-     * @return MemberDto 로 이뤄진 List
-     */
-    List<MemberDto> getMemberList();
-
-    /**
      * 입력받은 roleId,statId와 맞는 멤버 전체 조회 메서드
      * @return MemberDto 로 이뤄진 List
      */
     List<MemberDto> getMemberList(Long roleId,Long stateId);
 
+
+    /**
+     * 입력받은 memberId 의 멤버를 입력받은 stateId 의 state 로 수정하는 메서드
+     * @param memberId
+     * @param stateId
+     */
     void modifyMemberState(String memberId,Long stateId);
 }

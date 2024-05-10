@@ -31,26 +31,6 @@ public class MemberRepositoryImpl extends QuerydslRepositorySupport implements M
      * {@inheritDoc}
      */
     @Override
-    public Optional<List<MemberDto>> getMemberList() {
-        return Optional.ofNullable(from(member)
-                .select(Projections.constructor(MemberDto.class,
-                        member.memberNumber,
-                        member.lastLoginDateTime,
-                        member.memberEmail,
-                        member.memberId,
-                        roles.roleName,
-                        states.stateName
-                ))
-                .leftJoin(roles).on(member.roles.eq(roles))
-                .leftJoin(states).on(member.states.eq(states))
-                .fetch()
-        );
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     public Optional<List<MemberDto>> getMemberList(Long roleId, Long stateId) {
         return Optional.ofNullable(from(member)
                 .select(Projections.constructor(MemberDto.class,
@@ -63,8 +43,8 @@ public class MemberRepositoryImpl extends QuerydslRepositorySupport implements M
                 ))
                 .leftJoin(roles).on(member.roles.eq(roles))
                 .leftJoin(states).on(member.states.eq(states))
-                .where(roles.roleId.eq(roleId))
-                .where(states.stateId.eq(stateId))
+                .where(roleId != null ? roles.roleId.eq(roleId) : null)
+                .where(stateId != null ? states.stateId.eq(stateId) : null)
                 .fetch()
         );
     }
