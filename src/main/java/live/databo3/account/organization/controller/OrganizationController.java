@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 조직 관련 요청을 처리하는 Controller
  * @author jihyeon
- * @version 1.0.1
+ * @version 1.0.2
  */
 @RestController
 @RequiredArgsConstructor
@@ -61,7 +61,7 @@ public class OrganizationController {
     /**
      * 기존 조직의 이름을 수정하는 method
      * @param request ModifyOrgsRequest (OrganizationName)
-     * @return ResponseEntity 204, message: success
+     * @return ResponseEntity 200, message: success
      * @since 1.0.0
      */
     @PutMapping("/organizations/{organizationId}")
@@ -69,13 +69,13 @@ public class OrganizationController {
         organizationService.modifyOrganization(organizationId, request);
         HashMap<String, String> response = new HashMap<>();
         response.put("message", "success");
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     /**
      * 특정 조직 삭제 method
      * @param organizationId 삭제하고픈 조직 id
-     * @return ResponseEntity 204, message: success
+     * @return ResponseEntity 200, message: success
      * @since 1.0.0
      */
     @DeleteMapping("/organizations/{organizationId}")
@@ -83,14 +83,14 @@ public class OrganizationController {
         organizationService.deleteOrganization(organizationId);
         HashMap<String, String> response = new HashMap<>();
         response.put("message", "success");
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     /**
      * gateway SerialNumber, controller SerialNumber 중 바꾸고 싶은 값을 변경
      * @param organizationId 변경하고픈 gatewaySn 혹은 controllerSn를 가진 조직 id
      * @param request PutGatewayOrControllerDto(gatewaySn, controllerSn)
-     * @return ResponseEntity 204, message: success
+     * @return ResponseEntity 200, message: success
      * @since 1.0.1
      */
     @PutMapping("/organizations/{organizationId}/gatewayAndController")
@@ -98,13 +98,13 @@ public class OrganizationController {
         organizationService.putSerialNumber(organizationId, request);
         HashMap<String, String> response = new HashMap<>();
         response.put("message", "success");
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     /**
      * gateway SerialNumber 삭제
      * @param organizationId 삭제하고픈 gateway SerialNumber를 가진 조직 id
-     * @return ResponseEntity 204, message: success
+     * @return ResponseEntity 200, message: success
      * @since 1.0.1
      */
     @DeleteMapping("/organizations/{organizationId}/gateway")
@@ -112,13 +112,13 @@ public class OrganizationController {
         organizationService.deleteGatewaySn(organizationId);
         HashMap<String, String> response = new HashMap<>();
         response.put("message", "success");
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     /**
      * controller SerialNumber 삭제
      * @param organizationId 삭제하고픈 controller SerialNumber를 가진 조직 id
-     * @return ResponseEntity 204, message: success
+     * @return ResponseEntity 200, message: success
      * @since 1.0.1
      */
     @DeleteMapping("/organizations/{organizationId}/controller")
@@ -126,7 +126,7 @@ public class OrganizationController {
         organizationService.deleteControllerSn(organizationId);
         HashMap<String, String> response = new HashMap<>();
         response.put("message", "success");
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
 }

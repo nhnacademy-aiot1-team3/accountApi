@@ -5,7 +5,6 @@ import live.databo3.account.organization.entity.Organization;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -15,11 +14,10 @@ import javax.persistence.*;
 @Table(name = "member_orgs")
 public class MemberOrg {
     @Id
-    @GeneratedValue
-    @Column (name = "record_id")
-    private Long recordId;
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column (name = "record_number")
+    private Long recordNumber;
 
-    @Setter
     @Column (name = "state")
     private Integer state;
 
@@ -36,5 +34,9 @@ public class MemberOrg {
         this.state = state;
         this.member = member;
         this.organization = organization;
+    }
+
+    public void updateState(Integer state) {
+        this.state = state;
     }
 }

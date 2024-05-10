@@ -11,7 +11,9 @@ import live.databo3.account.memberOrgs.repository.MemberOrgsRepository;
 import live.databo3.account.organization.repository.OrganizationRepository;
 import live.databo3.account.organization.service.OrganizationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +23,9 @@ import java.util.Optional;
 /**
  * OrganizationService의 구현체
  * @author jihyeon
- * @version 1.0.1
+ * @version 1.0.2
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OrganizationServiceImpl implements OrganizationService {
@@ -102,15 +105,11 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     @Override
     public void modifyOrganization(Integer organizationId, ModifyOrgsRequest request) {
-        Optional<Organization> organizationOptional = organizationRepository.findById(organizationId);
-        if(organizationOptional.isEmpty()) {
-            throw new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND);
-        }
+        Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> new CustomException(ErrorCode.ORGANIZATION_ALREADY_EXIST));
         Optional<Organization> optionalName = organizationRepository.findByOrganizationName(request.getOrganizationName());
         if(optionalName.isPresent() && !organizationId.equals(optionalName.get().getOrganizationId())) {
             throw new CustomException(ErrorCode.ORGANIZATION_ALREADY_EXIST);
         }
-        Organization organization = organizationOptional.get();
         String organizationName = request.getOrganizationName();
 
         organization.setOrganizationName(organizationName);
@@ -124,6 +123,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      * @since 1.0.0
      */
     @Override
+    @Transactional
     public void deleteOrganization(Integer organizationId) {
         Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND));
 
@@ -138,17 +138,15 @@ public class OrganizationServiceImpl implements OrganizationService {
      */
     @Override
     public void putSerialNumber(Integer organizationId, PutGatewayOrControllerDto request) {
-        Optional<Organization> organizationOptional = organizationRepository.findById(organizationId);
-        if(organizationOptional.isEmpty()) {
-            throw new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND);
-        }
+        Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND));
+
         if(Objects.nonNull(request.getGatewaySn())){
-            organizationOptional.get().setGatewaySn(request.getGatewaySn());
+            organization.setGatewaySn(request.getGatewaySn());
         }
         if(Objects.nonNull(request.getControllerSn())){
-            organizationOptional.get().setControllerSn(request.getControllerSn());
+            organization.setControllerSn(request.getControllerSn());
         }
-        organizationRepository.save(organizationOptional.get());
+        organizationRepository.save(organization);
     }
 
     /**

@@ -20,6 +20,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * MemberOrgs Service의 구현체
+ * @author jihyeon
+ * @version 1.0.0
+ */
 @Service
 @RequiredArgsConstructor
 public class MemberOrgsServiceImpl implements MemberOrgsService {
@@ -27,8 +32,15 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
     private final OrganizationRepository organizationRepository;
     private final MemberRepository memberRepository;
 
+    /**
+     * 특정 조직 구성원 중에 특정 멤버가 있는가에 대한 판별
+     * @param organizationId 조직 담당 번호
+     * @param memberId 멤버 아이디
+     * @return 1-특정 조직에 특정 멤버가 없을 경우, 2-특정 조직에 특정 멤버가 있지만 state가 1일 경우, 3-특정 조직에 특정 멤버가 있지만 state가 2일 경우
+     * @since 1.0.0
+     */
     @Override
-    public Boolean booleanMemberOrgs(Integer organizationId, String memberId) {
+    public Integer booleanMemberOrgs(Integer organizationId, String memberId) {
         Optional<Member> memberOptional = memberRepository.findByMemberId(memberId);
         if(memberOptional.isEmpty()) {
             throw new CustomException(ErrorCode.MEMBER_NOT_FOUND);
@@ -38,12 +50,21 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
         }
         Optional<MemberOrg> memberOrgsOptional = memberOrgsRepository.findByOrganization_OrganizationIdAndMember_MemberId(organizationId, memberId);
         if(memberOrgsOptional.isEmpty()){
-            return false;
+            return 1;
         }
         MemberOrg memberOrg = memberOrgsOptional.get();
-        return memberOrg.getState() == 2;
+        if (memberOrg.getState() == 1) {
+            return 2;
+        }
+        return 3;
     }
 
+    /**
+     * 특정 멤버가 소속된 조직 외의 모든 조직 리스트
+     * @param memberId 멤버 아이디
+     * @return GetOrgsWithoutMemberResponse(organizationId, organizationName)의 리스트
+     * @since 1.0.0
+     */
     @Override
     public List<GetOrgsWithoutMemberResponse> getOrganizationsWithoutMember(String memberId) {
         memberRepository.findByMemberId(memberId).orElseThrow(()->new CustomException(ErrorCode.MEMBER_NOT_FOUND));
@@ -73,6 +94,12 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
         return orgList;
     }
 
+    /**
+     * 특정 멤버가 속한 조직 리스트
+     * @param memberId 멤버 아이디
+     * @return GetOrgsListResponse(state, role, organizationId, organizationName)의 리스트
+     * @since 1.0.0
+     */
     @Override
     public List<GetOrgsListResponse> getOrganizations(String memberId) {
         memberRepository.findByMemberId(memberId).orElseThrow(()->new CustomException(ErrorCode.MEMBER_NOT_FOUND));
@@ -91,6 +118,14 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
         return memberOrgList;
     }
 
+    /**
+     * 특정 조직 구성원에 속한 멤버들의 상태에 따라 가져오기
+     * @param organizationId 조직 담당 번호
+     * @param state 상태 1(=wait), 2(=approve)
+     * @param stringRole role name
+     * @return GetMembersByStateResponse(memberId, memberEmail, role, state)의 리스트
+     * @since 1.0.0
+     */
     @Override
     public List<GetMembersByStateResponse> getMemberListByState(Integer organizationId, Integer state, String stringRole) {
         Roles.ROLES role = null;
@@ -119,6 +154,12 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
         return memberList;
     }
 
+    /**
+     * 특정 조직 구성원에 특정 멤버가 소속하도록 추가
+     * @param organizationId 조직 담당 번호
+     * @param memberId 멤버 아이디
+     * @since 1.0.0
+     */
     @Override
     public void addMemberOrgs(Integer organizationId, String memberId) {
         Member member = memberRepository.findByMemberId(memberId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
@@ -136,15 +177,30 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
         memberOrgsRepository.save(memberOrg);
     }
 
+    /**
+     * 특정 조직 구성원에 속한 특정 멤버에 대한 상태 변경
+     * @param organizationId 조직 담당 번호
+     * @param memberId 멤버 아이디
+     * @param state 상태 1(=wait), 2(=approve)
+     * @since 1.0.0
+     */
     @Override
     public void modifyState(Integer organizationId, String memberId, Integer state) {
+        memberRepository.findByMemberId(memberId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+        organizationRepository.findById(organizationId).orElseThrow(() -> new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND));
         MemberOrg memberOrg = memberOrgsRepository.findByOrganization_OrganizationIdAndMember_MemberId(organizationId, memberId)
                 .orElseThrow(()-> new CustomException(ErrorCode.MEMBERORG_NOT_FOUND));
 
-        memberOrg.setState(state);
+        memberOrg.updateState(state);
         memberOrgsRepository.save(memberOrg);
     }
 
+    /**
+     * 특정 멤버를 특정 조직 구성원에서 삭제
+     * @param organizationId 조직 담당 번호
+     * @param memberId 멤버 아이디
+     * @since 1.0.0
+     */
     @Override
     public void deleteMemberOrgs(Integer organizationId, String memberId) {
         organizationRepository.findById(organizationId).orElseThrow(() -> new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND));
