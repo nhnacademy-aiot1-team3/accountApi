@@ -16,8 +16,8 @@ import javax.persistence.*;
 public class MemberOrg {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column (name = "record_id")
-    private Long recordId;
+    @Column (name = "record_number")
+    private Long recordNumber;
 
     @Column (name = "state")
     private Integer state;
