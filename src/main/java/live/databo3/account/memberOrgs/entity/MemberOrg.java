@@ -5,7 +5,6 @@ import live.databo3.account.organization.entity.Organization;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 
