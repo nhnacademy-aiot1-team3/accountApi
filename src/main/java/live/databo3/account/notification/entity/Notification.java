@@ -23,7 +23,7 @@ public class Notification {
     private String title;
 
     @Column (name = "contents")
-    private String content;
+    private String contents;
 
     @Column (name = "date")
     private LocalDateTime date;
@@ -36,18 +36,18 @@ public class Notification {
     private String file;
 
     @Builder
-    public Notification(Long notificationId, String title, String content, LocalDateTime date, Member member, String file) {
+    public Notification(Long notificationId, String title, String contents, LocalDateTime date, Member member, String file) {
         this.notificationId = notificationId;
         this.title = title;
-        this.content = content;
+        this.contents = contents;
         this.date = date;
         this.member = member;
         this.file = file;
     }
 
-    public void change(String title, String content, Member member, String file){
+    public void change(String title, String contents, Member member, String file){
         this.title = title;
-        this.content = content;
+        this.contents = contents;
         this.member = member;
         this.file = file;
     }
