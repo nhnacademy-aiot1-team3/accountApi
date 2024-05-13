@@ -13,6 +13,7 @@ import live.databo3.account.organization.service.OrganizationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,7 +22,7 @@ import java.util.Optional;
 /**
  * OrganizationService의 구현체
  * @author jihyeon
- * @version 1.0.1
+ * @version 1.0.2
  */
 @Service
 @RequiredArgsConstructor
@@ -124,6 +125,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      * @since 1.0.0
      */
     @Override
+    @Transactional
     public void deleteOrganization(Integer organizationId) {
         Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND));
 
