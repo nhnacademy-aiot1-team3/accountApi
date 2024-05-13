@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddNotificationRequest {
     private String title;
-    private String content;
+    private String contents;
     private String file;
 }

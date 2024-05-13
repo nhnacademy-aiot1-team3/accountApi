@@ -11,16 +11,16 @@ import java.time.LocalDateTime;
 public class GetNotificationResponse {
     private Long notificationId;
     private String title;
-    private String content;
+    private String contents;
     private LocalDateTime date;
     private String memberId;
     private String file;
 
     @Builder
-    public GetNotificationResponse(Long notificationId, String title, String content, LocalDateTime date, String memberId, String file) {
+    public GetNotificationResponse(Long notificationId, String title, String contents, LocalDateTime date, String memberId, String file) {
         this.notificationId = notificationId;
         this.title = title;
-        this.content = content;
+        this.contents = contents;
         this.date = date;
         this.memberId = memberId;
         this.file = file;
