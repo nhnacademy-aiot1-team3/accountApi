@@ -1,10 +1,7 @@
 package live.databo3.account.member.entity;
 
 import live.databo3.account.member.dto.JoinResponseDto;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,6 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Table(name = "members")
 public class Member {
 
@@ -65,5 +63,10 @@ public class Member {
                 .password(memberPassword)
                 .email(memberEmail)
                 .build();
+    }
+
+
+    public void modifyState(States state) {
+        this.states = state;
     }
 }

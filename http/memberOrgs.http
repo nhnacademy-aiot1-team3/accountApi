@@ -1,27 +1,22 @@
 ### 특정 조직에 해당 멤버가 속해있는것이 맞는가 여부 확인
-GET localhost:8090/api/account/organizations/1/members/testId2
+GET localhost:8090/api/account/organizations/1/members/testId1
 Content-Type: application/json
 
 ### 멤버가 속한 조직 제외한 나머지 조직 리스트 들고 오기
-GET localhost:8090/api/account/organizations/members-without
-X-USER-ID: testId4
+GET localhost:8090/api/account/organizations/members-without/ownerdd
 
 ### 멤버가 속한 조직 리스트 들고 오기
-GET localhost:8090/api/account/organizations/members
-X-USER-ID: testId1111
+GET localhost:8090/api/account/organizations/members/testId2
 
 ### 특정 조직에서 state와 role에 따라 멤버 들고오기
 GET localhost:8090/api/account/organizations/1/members/state?state=1&role=ROLE_OWNER
 
 ### 추가
-POST localhost:8090/api/account/organizations/3/members
+POST localhost:8090/api/account/organizations/3/members/testId2
 Content-Type: application/json
-X-USER-ID: testId1001
 
 ### state 수정
-PUT localhost:8090/api/account/organizations/1/members?state=2
-X-USER-ID: testId4
+PUT localhost:8090/api/account/organizations/3/members/testId2?state=2
 
 ### memberOrgs 삭제
-DELETE localhost:8090/api/account/organizations/331/members
-X-USER-ID: testId9
+DELETE localhost:8090/api/account/organizations/3/members/testId5
