@@ -2,7 +2,7 @@
 GET localhost:8090/api/account/notifications
 
 ### 특정 notification 들고오기
-GET localhost:8090/api/account/notifications/1
+GET localhost:8090/api/account/notifications/6
 
 ### notification 생성
 POST localhost:8090/api/account/notifications
@@ -11,13 +11,13 @@ Accept: application/json
 X-USER-ID: admin
 
 {
-  "title": "DDDDD",
+  "title": "ㅇㅇㅇㅇ",
   "content": "DDDDD",
   "file": null
 }
 
 ### notification 수정
-PUT localhost:8090/api/account/notifications/1
+PUT localhost:8090/api/account/notifications/2
 Content-Type: application/json
 Accept: application/json
 X-USER-ID: admin
@@ -29,4 +29,4 @@ X-USER-ID: admin
 }
 
 ### notification 삭제
-DELETE localhost:8090/api/account/notifications/1
+DELETE localhost:8090/api/account/notifications/2
