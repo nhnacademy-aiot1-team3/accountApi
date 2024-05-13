@@ -54,7 +54,7 @@ public class NotificationController {
      * @return ResponseEntity 200, message: success
      * @since 1.0.0
      */
-    @PostMapping("/notification")
+    @PostMapping("/notifications")
     public ResponseEntity<HashMap<String, String>> postNotifications(@RequestBody AddNotificationRequest response, @RequestHeader("X-USER-ID") String memberId) {
         notificationService.addNotification(response, memberId);
         HashMap<String, String> result = new HashMap<>();
