@@ -77,8 +77,8 @@ public class MemberOrgsController {
      */
     @GetMapping("/organizations/{organizationId}/members/state")
     public ResponseEntity<List<GetMembersByStateResponse>> getMemberByState(@PathVariable Integer organizationId, @RequestParam Integer state, @RequestParam String role) {
-        List<GetMembersByStateResponse> memberStateWaitDtoList = memberOrgsService.getMemberListByState(organizationId, state, role);
-        return ResponseEntity.ok(memberStateWaitDtoList);
+        List<GetMembersByStateResponse> getMembersByStateResponsesList = memberOrgsService.getMemberListByState(organizationId, state, role);
+        return ResponseEntity.ok(getMembersByStateResponsesList);
     }
 
     /**
