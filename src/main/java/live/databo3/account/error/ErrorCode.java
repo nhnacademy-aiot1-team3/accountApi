@@ -21,7 +21,7 @@ public enum ErrorCode {
     EMAIL_KEY_EXPIRE(404,"이미 만료된 코드 입니다."),
     ORGANIZATION_NOT_FOUND(404, "조회한 조직이 없습니다"),
     MEMBERORG_NOT_FOUND(404, "해당 조직에 멤버가 없습니다"),
-    NOTIFICATION_NOT_FOUND(404, "조회한 공지사항을 찾을 수 없습니다");
+    NOTIFICATION_NOT_FOUND(404, "조회한 공지사항을 찾을 수 없습니다"),
     INVALID_REQUEST_PARAMETER(404,"요청 정보가 올바르지 않습니다");
 
     private final int code;
