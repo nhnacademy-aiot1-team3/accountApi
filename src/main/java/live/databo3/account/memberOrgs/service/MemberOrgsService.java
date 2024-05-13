@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface MemberOrgsService {
 
-    Boolean booleanMemberOrgs(Integer organizationId, String memberId);
+    Integer booleanMemberOrgs(Integer organizationId, String memberId);
 
     List<GetOrgsWithoutMemberResponse> getOrganizationsWithoutMember(String memberId);
 
