@@ -119,7 +119,7 @@ class OrganizationControllerTest {
         mockMvc.perform(put("/api/account/organizations/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
-                .andExpect(status().isNoContent())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("success"))
                 .andDo(print());
     }
@@ -130,7 +130,7 @@ class OrganizationControllerTest {
         doNothing().when(organizationService).deleteOrganization(any());
 
         mockMvc.perform(delete("/api/account/organizations/1"))
-                .andExpect(status().isNoContent())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("success"))
                 .andDo(print());
     }
@@ -149,7 +149,7 @@ class OrganizationControllerTest {
         mockMvc.perform(put("/api/account/organizations/" + organizationId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content))
-                .andExpect(status().isNoContent())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("message").value("success"))
                 .andDo(print());
     }
@@ -168,7 +168,7 @@ class OrganizationControllerTest {
         mockMvc.perform(put("/api/account/organizations/" + organizationId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(content))
-                .andExpect(status().isNoContent())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("message").value("success"))
                 .andDo(print());
     }
@@ -187,7 +187,7 @@ class OrganizationControllerTest {
         mockMvc.perform(put("/api/account/organizations/" + organizationId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(content))
-                .andExpect(status().isNoContent())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("message").value("success"))
                 .andDo(print());
     }
@@ -200,7 +200,7 @@ class OrganizationControllerTest {
         doNothing().when(organizationService).deleteOrganization(any(Integer.class));
 
         mockMvc.perform(delete("/api/account/organizations/" + organizationId + "/gateway"))
-                .andExpect(status().isNoContent())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("message").value("success"))
                 .andDo(print());
     }
@@ -213,7 +213,7 @@ class OrganizationControllerTest {
         doNothing().when(organizationService).deleteOrganization(any(Integer.class));
 
         mockMvc.perform(delete("/api/account/organizations/" + organizationId + "/controller"))
-                .andExpect(status().isNoContent())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("message").value("success"))
                 .andDo(print());
     }
