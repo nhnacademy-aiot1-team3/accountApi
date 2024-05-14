@@ -101,11 +101,11 @@ public class OrganizationServiceImpl implements OrganizationService {
      * organization이 db에 없을 경우 exception (ORGANIZATION_NOT_FOUND)띄움
      * 있을 경우 조직 이름을 변경된 값으로 바꾼 후 저장
      * @param request ModifyOrgsRequest (OrganizationName)
-     * @since 1.0.0
+     * @since 1.0.1
      */
     @Override
     public void modifyOrganization(Integer organizationId, ModifyOrgsRequest request) {
-        Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> new CustomException(ErrorCode.ORGANIZATION_ALREADY_EXIST));
+        Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND));
         Optional<Organization> optionalName = organizationRepository.findByOrganizationName(request.getOrganizationName());
         if(optionalName.isPresent() && !organizationId.equals(optionalName.get().getOrganizationId())) {
             throw new CustomException(ErrorCode.ORGANIZATION_ALREADY_EXIST);
