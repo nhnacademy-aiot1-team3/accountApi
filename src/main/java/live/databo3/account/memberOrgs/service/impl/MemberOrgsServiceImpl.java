@@ -130,7 +130,7 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
     public List<GetMembersByStateResponse> getMemberListByState(Integer organizationId, Integer state, String stringRole) {
         Roles.ROLES role = null;
         for(Roles.ROLES roles : Roles.ROLES.values()) {
-            if(roles.name().equals(stringRole)) {
+            if(roles.name().equalsIgnoreCase(stringRole)) {
                 role = roles;
                 break;
             }

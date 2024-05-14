@@ -17,7 +17,7 @@ public interface MemberOrgsRepository extends JpaRepository<MemberOrg, Long> {
     void deleteAllByOrganization(Organization organization);
 
     /**
-     * organizationId, memberNumber으로 MemberOrg 찾기
+     * organizationId, memberId로 MemberOrg 찾기
      * @param organizationId 조직 넘버
      * @param memberId 멤버 아이디
      * @return Optional<MemberOrg>
