@@ -10,14 +10,14 @@ import lombok.NoArgsConstructor;
 public class GetMembersByStateResponse {
     private String memberId;
     private String memberEmail;
-    private Roles role;
+    private String roleName;
     private Integer state;
 
     @Builder
-    public GetMembersByStateResponse(String memberId, String memberEmail, Roles role, Integer state) {
+    public GetMembersByStateResponse(String memberId, String memberEmail, String roleName, Integer state) {
         this.memberId = memberId;
         this.memberEmail = memberEmail;
-        this.role = role;
+        this.roleName = roleName;
         this.state = state;
     }
 }

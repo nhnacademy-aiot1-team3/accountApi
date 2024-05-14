@@ -9,14 +9,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GetOrgsListResponse {
     private Integer state;
-    private Roles role;
+    private String roleName;
     private Integer organizationId;
     private String organizationName;
 
     @Builder
-    public GetOrgsListResponse(Integer state, Integer organizationId, String organizationName, Roles role) {
+    public GetOrgsListResponse(Integer state, Integer organizationId, String organizationName, String roleName) {
         this.state = state;
-        this.role = role;
+        this.roleName = roleName;
         this.organizationId = organizationId;
         this.organizationName = organizationName;
     }

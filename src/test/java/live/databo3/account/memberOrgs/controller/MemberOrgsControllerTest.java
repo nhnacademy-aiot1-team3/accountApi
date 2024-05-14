@@ -89,15 +89,15 @@ public class MemberOrgsControllerTest {
     @Test
     @DisplayName("member가 해당하는 조직들을 가져오는 method")
     void getOrganizatioinsByMember() throws Exception {
-        Roles role = new Roles();
+
         GetOrgsListResponse response1 = GetOrgsListResponse.builder()
-                .role(role)
+                .roleName("ROLE_OWNER")
                 .state(1)
                 .organizationId(1)
                 .organizationName("nhn 김해")
                 .build();
         GetOrgsListResponse response2 = GetOrgsListResponse.builder()
-                .role(role)
+                .roleName("ROLE_VIEWER")
                 .state(2)
                 .organizationId(2)
                 .organizationName("nhn 서울")
@@ -109,14 +109,14 @@ public class MemberOrgsControllerTest {
 
         mockMvc.perform(get("/api/account/organizations/members/admin"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].role").exists())
-                .andExpect(jsonPath("$[1].role").exists())
+                .andExpect(jsonPath("$[0].roleName").exists())
+                .andExpect(jsonPath("$[1].roleName").exists())
                 .andExpect(jsonPath("$[0].state").value(1))
                 .andExpect(jsonPath("$[1].state").value(2))
                 .andExpect(jsonPath("$[0].organizationId").value(1))
                 .andExpect(jsonPath("$[1].organizationId").value(2))
                 .andExpect(jsonPath("$[0].organizationName").value("nhn 김해"))
-                .andExpect(jsonPath("$[1].organizationName").value("nhn 대구"))
+                .andExpect(jsonPath("$[1].organizationName").value("nhn 서울"))
                 .andDo(print());
     }
 
@@ -127,13 +127,13 @@ public class MemberOrgsControllerTest {
         GetMembersByStateResponse response1 = GetMembersByStateResponse.builder()
                 .memberId("testId1")
                 .memberEmail("nhn1@academy.com")
-                .role(role)
+                .roleName("ROLE_OWNER")
                 .state(2)
                 .build();
         GetMembersByStateResponse response2 = GetMembersByStateResponse.builder()
                 .memberId("testId2")
                 .memberEmail("nhn2@academy.com")
-                .role(role)
+                .roleName("ROLE_VIEWER")
                 .state(2)
                 .build();
 
@@ -147,8 +147,8 @@ public class MemberOrgsControllerTest {
                 .andExpect(jsonPath("$[1].memberId").value("testId2"))
                 .andExpect(jsonPath("$[0].memberEmail").value("nhn1@academy.com"))
                 .andExpect(jsonPath("$[1].memberEmail").value("nhn2@academy.com"))
-                .andExpect(jsonPath("$[0].role").exists())
-                .andExpect(jsonPath("$[1].role").exists())
+                .andExpect(jsonPath("$[0].roleName").value("ROLE_OWNER"))
+                .andExpect(jsonPath("$[1].roleName").value("ROLE_VIEWER"))
                 .andExpect(jsonPath("$[0].state").value(2))
                 .andExpect(jsonPath("$[1].state").value(2))
                 .andDo(print());

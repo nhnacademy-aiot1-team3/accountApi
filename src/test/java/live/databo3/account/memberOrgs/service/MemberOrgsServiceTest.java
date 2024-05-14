@@ -214,6 +214,7 @@ public class MemberOrgsServiceTest {
     @DisplayName("특정 멤버가 속한 조직 리스트")
     void getOrganizations() {
         Roles roles = new Roles();
+        roles.setRoleName(Roles.ROLES.ROLE_OWNER);
         States states = new States();
         Member member = Member.createMember("testId1","pw","email",roles, states);
         Organization organization1 = Organization.builder()
@@ -254,8 +255,8 @@ public class MemberOrgsServiceTest {
         Assertions.assertEquals("nhn 서울", responseList.get(1).getOrganizationName());
         Assertions.assertEquals(2, responseList.get(0).getState());
         Assertions.assertEquals(2, responseList.get(1).getState());
-        Assertions.assertNotNull(responseList.get(0).getRole());
-        Assertions.assertNotNull(responseList.get(1).getRole());
+        Assertions.assertNotNull(responseList.get(0).getRoleName());
+        Assertions.assertNotNull(responseList.get(1).getRoleName());
         Assertions.assertNotNull(responseList.get(0).getState());
         Assertions.assertNotNull(responseList.get(1).getState());
     }
@@ -275,6 +276,7 @@ public class MemberOrgsServiceTest {
     @DisplayName("특정 조직 구성원에 속한 멤버들의 상태에 따라 가져오기")
     void getMemberListByState() {
         Roles roles = new Roles();
+        roles.setRoleName(Roles.ROLES.ROLE_OWNER);
         States states = new States();
         Member member = Member.createMember("testId1","pw","email",roles, states);
         Organization organization1 = Organization.builder()
@@ -313,8 +315,8 @@ public class MemberOrgsServiceTest {
         Assertions.assertEquals("testId1", responseList.get(1).getMemberId());
         Assertions.assertEquals("email", responseList.get(0).getMemberEmail());
         Assertions.assertEquals("email", responseList.get(0).getMemberEmail());
-        Assertions.assertNotNull(responseList.get(0).getRole());
-        Assertions.assertNotNull(responseList.get(1).getRole());
+        Assertions.assertNotNull(responseList.get(0).getRoleName());
+        Assertions.assertNotNull(responseList.get(1).getRoleName());
         Assertions.assertNotNull(responseList.get(0).getState());
         Assertions.assertNotNull(responseList.get(1).getState());
     }
