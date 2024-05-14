@@ -1,6 +1,5 @@
 package live.databo3.account.memberOrgs.dto;
 
-import live.databo3.account.member.entity.Roles;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
