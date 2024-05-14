@@ -96,7 +96,7 @@ public class MemberOrgsServiceTest {
     @DisplayName("특정 조직의 구성원 중 특정 멤버가 있는가에 대한 판별 실패 - 없는 멤버")
     void booleanMemberOrgsFail1() {
         try{
-            Integer result = memberOrgsService.booleanMemberOrgs(1, "testId");
+            memberOrgsService.booleanMemberOrgs(1, "testId");
         } catch (Exception e){
             Assertions.assertEquals("조회한 멤버가 없습니다.", e.getMessage());
             Assertions.assertEquals(CustomException.class, e.getClass());
@@ -108,7 +108,7 @@ public class MemberOrgsServiceTest {
     void booleanMemberOrgsFail2() {
         Member member = new Member();
 
-        MemberOrg memberOrg = MemberOrg.builder()
+        MemberOrg.builder()
                 .state(2)
                 .member(member).build();
 
@@ -116,7 +116,7 @@ public class MemberOrgsServiceTest {
         given(organizationRepository.existsById(any())).willReturn(false);
 
         try{
-            Integer result = memberOrgsService.booleanMemberOrgs(1, "testId");
+            memberOrgsService.booleanMemberOrgs(1, "testId");
         } catch (Exception e){
             Assertions.assertEquals("조회한 조직이 없습니다", e.getMessage());
             Assertions.assertEquals(CustomException.class, e.getClass());
@@ -203,7 +203,7 @@ public class MemberOrgsServiceTest {
     @DisplayName("특정 멤버가 소속된 조직 외의 모든 조직 리스트 - 없는 멤버")
     void getOrganizationWithoutMemberFail() {
         try {
-            List<GetOrgsWithoutMemberResponse> responseList = memberOrgsService.getOrganizationsWithoutMember("testId");
+            memberOrgsService.getOrganizationsWithoutMember("testId");
         } catch (Exception e){
             Assertions.assertEquals(CustomException.class, e.getClass());
             Assertions.assertEquals("조회한 멤버가 없습니다.", e.getMessage());
@@ -265,7 +265,7 @@ public class MemberOrgsServiceTest {
     @DisplayName("특정 멤버가 속한 조직 리스트 - 없는 멤버")
     void getOrganizationsFail() {
         try {
-            List<GetOrgsListResponse> responseList = memberOrgsService.getOrganizations("testId");
+            memberOrgsService.getOrganizations("testId");
         } catch (Exception e) {
             Assertions.assertEquals(CustomException.class, e.getClass());
             Assertions.assertEquals("조회한 멤버가 없습니다.", e.getMessage());
@@ -325,7 +325,7 @@ public class MemberOrgsServiceTest {
     @DisplayName("특정 조직 구성원에 속한 멤버들의 상태에 따라 가져오기 실패 - 잘못된 role 명칭")
     void getMemberListByStateFail() {
         try{
-            List<GetMembersByStateResponse> responseList = memberOrgsService.getMemberListByState(1, 2, "ROLE_owner");
+            memberOrgsService.getMemberListByState(1, 2, "ROLE_owner");
         } catch (Exception e) {
             Assertions.assertEquals(CustomException.class, e.getClass());
             Assertions.assertEquals("역할을 찾을 수 없습니다.", e.getMessage());
