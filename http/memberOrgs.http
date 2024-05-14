@@ -9,7 +9,7 @@ GET localhost:8090/api/account/organizations/members-without/ownerdd
 GET localhost:8090/api/account/organizations/members/testId2
 
 ### 특정 조직에서 state와 role에 따라 멤버 들고오기
-GET localhost:8090/api/account/organizations/1/members/state?state=1&role=ROLE_OWNER
+GET localhost:8090/api/account/organizations/1/members/state?state=2&role=ROLE_OWNER
 
 ### 추가
 POST localhost:8090/api/account/organizations/3/members/testId2
