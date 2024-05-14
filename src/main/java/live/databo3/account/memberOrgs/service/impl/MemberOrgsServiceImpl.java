@@ -24,7 +24,7 @@ import java.util.Optional;
 /**
  * MemberOrgs Service의 구현체
  * @author jihyeon
- * @version 1.0.1
+ * @version 1.0.2
  */
 @Slf4j
 @Service
@@ -85,7 +85,7 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
                 }
             }
 
-            if(flag || memberOrgList.isEmpty()) {
+            if(flag) {
                 GetOrgsWithoutMemberResponse getOrgsListResponse = GetOrgsWithoutMemberResponse.builder()
                         .organizationId(organization.getOrganizationId())
                         .organizationName(organization.getOrganizationName())
