@@ -14,6 +14,7 @@ import live.databo3.account.memberOrgs.entity.MemberOrg;
 import live.databo3.account.organization.entity.Organization;
 import live.databo3.account.organization.repository.OrganizationRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,8 +24,9 @@ import java.util.Optional;
 /**
  * MemberOrgs Service의 구현체
  * @author jihyeon
- * @version 1.0.0
+ * @version 1.0.2
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MemberOrgsServiceImpl implements MemberOrgsService {
@@ -83,7 +85,7 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
                 }
             }
 
-            if(flag || memberOrgList.isEmpty()) {
+            if(flag) {
                 GetOrgsWithoutMemberResponse getOrgsListResponse = GetOrgsWithoutMemberResponse.builder()
                         .organizationId(organization.getOrganizationId())
                         .organizationName(organization.getOrganizationName())
@@ -107,9 +109,10 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
         List<MemberOrg> organizationList = memberOrgsRepository.findByMember_MemberId(memberId);
         List<GetOrgsListResponse> memberOrgList = new ArrayList<>();
         for(MemberOrg memberOrg : organizationList) {
+            log.info("name:{}", memberOrg.getMember().getRoles().getRoleName().name());
             GetOrgsListResponse orgsListResponse = GetOrgsListResponse.builder()
                     .state(memberOrg.getState())
-                    .role(memberOrg.getMember().getRoles())
+                    .roleName(memberOrg.getMember().getRoles().getRoleName().name())
                     .organizationId(memberOrg.getOrganization().getOrganizationId())
                     .organizationName(memberOrg.getOrganization().getOrganizationName())
                     .build();
@@ -145,7 +148,7 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
             GetMembersByStateResponse response = GetMembersByStateResponse.builder()
                     .memberId(memberOrg.getMember().getMemberId())
                     .memberEmail(memberOrg.getMember().getMemberEmail())
-                    .role(memberOrg.getMember().getRoles())
+                    .roleName(memberOrg.getMember().getRoles().getRoleName().name())
                     .state(memberOrg.getState())
                     .build();
 
