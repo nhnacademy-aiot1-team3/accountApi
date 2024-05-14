@@ -123,7 +123,6 @@ public class MemberOrgsControllerTest {
     @Test
     @DisplayName("상태와 role에 따라 멤버 들고 오기")
     void getMemberByState() throws Exception {
-        Roles role = new Roles();
         GetMembersByStateResponse response1 = GetMembersByStateResponse.builder()
                 .memberId("testId1")
                 .memberEmail("nhn1@academy.com")
