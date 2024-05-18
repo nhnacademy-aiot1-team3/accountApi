@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 조직 - 멤버 매핑 된 DB 관련 요청을 처리하는 Controller
  * @author jihyeon
- * @version 1.0.0
+ * @version 1.0.2
  */
 @RestController
 @RequiredArgsConstructor
@@ -23,6 +23,16 @@ import java.util.List;
 public class MemberOrgsController {
     private final MemberOrgsService memberOrgsService;
 
+    /**
+     * Void 대신 HashMap으로 성공했음을 알린다
+     * @return HashMap<String, String>으로 message, success를 return
+     * @since 1.0.2
+     */
+    public HashMap<String, String> getMsg() {
+        HashMap<String, String> response = new HashMap<>();
+        response.put("message", "success");
+        return response;
+    }
 
     /**
      * member가 organization에 속해 있는가 & state가 approve(= 2) 상태인가 확인
@@ -49,8 +59,8 @@ public class MemberOrgsController {
      * @return member가 속한 조직을 제외한 조직 리스트
      * @since 1.0.0
      */
-    @GetMapping("/organizations/members-without/{memberId}")
-    public ResponseEntity<List<GetOrgsWithoutMemberResponse>> getOrganizationsWithoutMember(@PathVariable String memberId) {
+    @GetMapping("organizations/members-without/me")
+    public ResponseEntity<List<GetOrgsWithoutMemberResponse>> getOrganizationsWithoutMe(@RequestHeader("X-USER-ID") String memberId) {
         List<GetOrgsWithoutMemberResponse> organizationList = memberOrgsService.getOrganizationsWithoutMember(memberId);
         return ResponseEntity.ok(organizationList);
     }
@@ -61,8 +71,8 @@ public class MemberOrgsController {
      * @return GetOrgsListResponse(organizationId, organizationName, state, role)의 리스트
      * @since 1.0.0
      */
-    @GetMapping("/organizations/members/{memberId}")
-    public ResponseEntity<List<GetOrgsListResponse>> getOrganizationsByMember(@PathVariable String memberId) {
+    @GetMapping("/organizations/members/me")
+    public ResponseEntity<List<GetOrgsListResponse>> getOrganizationsByMe(@RequestHeader("X-USER-ID") String memberId) {
         List<GetOrgsListResponse> organizationList = memberOrgsService.getOrganizations(memberId);
         return ResponseEntity.ok(organizationList);
     }
@@ -91,8 +101,8 @@ public class MemberOrgsController {
     @PostMapping("/organizations/{organizationId}/members/{memberId}")
     public ResponseEntity<HashMap<String, String>> postMemberOrgs(@PathVariable Integer organizationId, @PathVariable String memberId) {
         memberOrgsService.addMemberOrgs(organizationId, memberId);
-        HashMap<String, String> response = new HashMap<>();
-        response.put("message", "success");
+        HashMap<String, String> response = getMsg();
+
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -107,8 +117,8 @@ public class MemberOrgsController {
     @PutMapping("/organizations/{organizationId}/members/{memberId}")
     public ResponseEntity<HashMap<String, String>> putState(@PathVariable Integer organizationId, @PathVariable String memberId, @RequestParam Integer state) {
         memberOrgsService.modifyState(organizationId, memberId, state);
-        HashMap<String, String> response = new HashMap<>();
-        response.put("message", "success");
+        HashMap<String, String> response = getMsg();
+
         return ResponseEntity.ok(response);
     }
 
@@ -122,8 +132,8 @@ public class MemberOrgsController {
     @DeleteMapping("/organizations/{organizationId}/members/{memberId}")
     public ResponseEntity<HashMap<String, String>> deleteMember(@PathVariable Integer organizationId, @PathVariable String memberId) {
         memberOrgsService.deleteMemberOrgs(organizationId, memberId);
-        HashMap<String, String> response = new HashMap<>();
-        response.put("message", "success");
+        HashMap<String, String> response = getMsg();
+
         return ResponseEntity.ok(response);
     }
 }
