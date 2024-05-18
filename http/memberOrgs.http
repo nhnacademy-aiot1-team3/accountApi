@@ -3,10 +3,13 @@ GET localhost:8090/api/account/organizations/1/members/testId1
 Content-Type: application/json
 
 ### 멤버가 속한 조직 제외한 나머지 조직 리스트 들고 오기
-GET localhost:8090/api/account/organizations/members-without/ownerdd
+GET localhost:8090/api/account/organizations/members-without/me
+X-USER-ID: testId2
+
 
 ### 멤버가 속한 조직 리스트 들고 오기
-GET localhost:8090/api/account/organizations/members/testId2
+GET localhost:8090/api/account/organizations/members/me
+X-USER-ID: testId2
 
 ### 특정 조직에서 state와 role에 따라 멤버 들고오기
 GET localhost:8090/api/account/organizations/1/members/state?state=2&role=ROLE_OWNER
