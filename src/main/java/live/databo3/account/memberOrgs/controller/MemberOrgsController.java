@@ -98,7 +98,7 @@ public class MemberOrgsController {
      * @return ResponseEntity 201, message: success
      * @since 1.0.0
      */
-    @PostMapping("/organizations/{organizationId}/members/")
+    @PostMapping("/organizations/{organizationId}/members")
     public ResponseEntity<HashMap<String, String>> postMemberOrgs(@PathVariable Integer organizationId, @RequestHeader("X-USER-ID") String memberId) {
         memberOrgsService.addMemberOrgs(organizationId, memberId);
         HashMap<String, String> response = getMsg();
