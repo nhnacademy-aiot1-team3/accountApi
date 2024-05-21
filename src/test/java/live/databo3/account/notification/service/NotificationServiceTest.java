@@ -135,7 +135,7 @@ class NotificationServiceTest {
         AddNotificationRequest request = AddNotificationRequest.builder()
                 .title("제목")
                 .contents("내용")
-                .file(null).build();
+                .build();
 
         notificationService.addNotification(request, "member1");
 
@@ -152,7 +152,7 @@ class NotificationServiceTest {
         AddNotificationRequest request = AddNotificationRequest.builder()
                 .title("제목")
                 .contents("내용")
-                .file(null).build();
+                .build();
         try{
             notificationService.addNotification(request, "member1");
         } catch (Exception e) {
@@ -177,7 +177,7 @@ class NotificationServiceTest {
         ModifyNotificationRequest request = ModifyNotificationRequest.builder()
                 .title("제목")
                 .contents("내용")
-                .file(null).build();
+                .build();
 
         given(memberRepository.findByMemberId(any())).willReturn(Optional.of(member));
         given(notificationRepository.findById(any())).willReturn(Optional.of(notification));
@@ -193,7 +193,7 @@ class NotificationServiceTest {
         ModifyNotificationRequest request = ModifyNotificationRequest.builder()
                 .title("제목")
                 .contents("내용")
-                .file(null).build();
+                .build();
 
         try{
             notificationService.modifyNotification(1L, request, "testId");
@@ -221,7 +221,7 @@ class NotificationServiceTest {
         ModifyNotificationRequest request = ModifyNotificationRequest.builder()
                 .title("제목")
                 .contents("내용")
-                .file(null).build();
+                .build();
 
         given(notificationRepository.findById(any())).willReturn(Optional.of(notification));
 
