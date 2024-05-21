@@ -45,7 +45,7 @@ class NotificationControllerTest {
                 .contents("내용")
                 .memberId("testId1")
                 .date(LocalDateTime.now())
-                .file(null).build();
+                .build();
 
         given(notificationService.getNotification(any(Long.class))).willReturn(getNotificationResponse);
 
@@ -96,7 +96,6 @@ class NotificationControllerTest {
         AddNotificationRequest request = AddNotificationRequest.builder()
                 .title("제목")
                 .contents("내용")
-                .file(null)
                 .build();
 
         String content = new ObjectMapper().writeValueAsString(request);
@@ -116,7 +115,6 @@ class NotificationControllerTest {
         ModifyNotificationRequest request = ModifyNotificationRequest.builder()
                 .title("제목")
                 .contents("내용")
-                .file(null)
                 .build();
 
         String content = new ObjectMapper().writeValueAsString(request);

@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * 공지사항 DB 관련 요청을 처리하는 Controller
  * @author jihyeon
- * @version 1.0.0
+ * @version 1.0.1
  */
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +27,7 @@ public class NotificationController {
     /**
      * 특정 공지사항 정보 반환하기
      * @param notificationId 공지사항 담당 번호
-     * @return GetNotificationResponse(notificationId, title, contents, date, memberId, file)
+     * @return GetNotificationResponse(notificationId, title, contents, date, memberId)
      * @since 1.0.0
      */
     @GetMapping("/notifications/{notificationId}")
@@ -49,7 +49,7 @@ public class NotificationController {
 
     /**
      * 공지사항 추가
-     * @param response AddNotificationRequest(title, contents, file)
+     * @param response AddNotificationRequest(title, contents)
      * @param memberId 멤버 아이디
      * @return ResponseEntity 200, message: success
      * @since 1.0.0
@@ -65,7 +65,7 @@ public class NotificationController {
     /**
      * 공지사항 수정
      * @param notificationId 공지사항 담당 번호
-     * @param request 수정사항 (title, contents, file)
+     * @param request 수정사항 (title, contents)
      * @param memberId 멤버 아이디
      * @return ResponseEntity 200, message: success
      * @since 1.0.0

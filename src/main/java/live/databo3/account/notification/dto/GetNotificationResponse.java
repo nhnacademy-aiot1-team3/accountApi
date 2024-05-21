@@ -14,15 +14,13 @@ public class GetNotificationResponse {
     private String contents;
     private LocalDateTime date;
     private String memberId;
-    private String file;
 
     @Builder
-    public GetNotificationResponse(Long notificationId, String title, String contents, LocalDateTime date, String memberId, String file) {
+    public GetNotificationResponse(Long notificationId, String title, String contents, LocalDateTime date, String memberId) {
         this.notificationId = notificationId;
         this.title = title;
         this.contents = contents;
         this.date = date;
         this.memberId = memberId;
-        this.file = file;
     }
 }

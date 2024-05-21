@@ -1,6 +1,5 @@
 package live.databo3.account.memberOrgs.controller;
 
-import live.databo3.account.member.entity.Roles;
 import live.databo3.account.memberOrgs.dto.GetMembersByStateResponse;
 import live.databo3.account.memberOrgs.dto.GetOrgsListResponse;
 import live.databo3.account.memberOrgs.dto.GetOrgsWithoutMemberResponse;
