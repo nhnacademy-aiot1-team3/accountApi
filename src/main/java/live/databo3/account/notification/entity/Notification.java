@@ -32,23 +32,18 @@ public class Notification {
     @JoinColumn(name = "member_number")
     private Member member;
 
-    @Column (name = "file")
-    private String file;
-
     @Builder
-    public Notification(Long notificationId, String title, String contents, LocalDateTime date, Member member, String file) {
+    public Notification(Long notificationId, String title, String contents, LocalDateTime date, Member member) {
         this.notificationId = notificationId;
         this.title = title;
         this.contents = contents;
         this.date = date;
         this.member = member;
-        this.file = file;
     }
 
-    public void change(String title, String contents, Member member, String file){
+    public void change(String title, String contents, Member member){
         this.title = title;
         this.contents = contents;
         this.member = member;
-        this.file = file;
     }
 }

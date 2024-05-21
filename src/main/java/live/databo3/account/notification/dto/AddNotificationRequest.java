@@ -12,9 +12,8 @@ public class AddNotificationRequest {
     private String file;
 
     @Builder
-    public AddNotificationRequest(String title, String contents, String file) {
+    public AddNotificationRequest(String title, String contents) {
         this.title = title;
         this.contents = contents;
-        this.file = file;
     }
 }
