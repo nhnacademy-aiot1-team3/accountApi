@@ -12,7 +12,7 @@ GET localhost:8090/api/account/organizations/members/testId2
 GET localhost:8090/api/account/organizations/1/members/state?state=2&role=ROLE_OWNER
 
 ### 추가
-POST localhost:8090/api/account/organizations/3/members/
+POST localhost:8090/api/account/organizations/3/members
 Content-Type: application/json
 X-USER-ID: testId3
 
