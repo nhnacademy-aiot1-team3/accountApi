@@ -1,0 +1,18 @@
+2024-04-18 16:33:34 jdbc[113]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "MEMBERS" not found (this database is empty); SQL statement:
+select member0_.member_number as member_n1_0_, member0_.last_login_date_time as last_log2_0_, member0_.member_email as member_e3_0_, member0_.member_id as member_i4_0_, member0_.member_password as member_p5_0_, member0_.role_id as role_id6_0_, member0_.state_id as state_id7_0_ from Members member0_ where member0_.member_id=? [42104-214]
+2024-04-18 16:33:37 jdbc[113]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "MEMBERS" not found (this database is empty); SQL statement:
+select member0_.member_number as member_n1_0_, member0_.last_login_date_time as last_log2_0_, member0_.member_email as member_e3_0_, member0_.member_id as member_i4_0_, member0_.member_password as member_p5_0_, member0_.role_id as role_id6_0_, member0_.state_id as state_id7_0_ from Members member0_ where member0_.member_id=? [42104-214]
+2024-04-18 16:33:51 jdbc[113]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "MEMBERS" not found (this database is empty); SQL statement:
+select member0_.member_number as member_n1_0_, member0_.last_login_date_time as last_log2_0_, member0_.member_email as member_e3_0_, member0_.member_id as member_i4_0_, member0_.member_password as member_p5_0_, member0_.role_id as role_id6_0_, member0_.state_id as state_id7_0_ from Members member0_ where member0_.member_id=? [42104-214]
+2024-04-18 16:34:13 jdbc[113]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "MEMBERS" not found (this database is empty); SQL statement:
+select member0_.member_number as member_n1_0_, member0_.last_login_date_time as last_log2_0_, member0_.member_email as member_e3_0_, member0_.member_id as member_i4_0_, member0_.member_password as member_p5_0_, member0_.role_id as role_id6_0_, member0_.state_id as state_id7_0_ from Members member0_ where member0_.member_id=? [42104-214]
+2024-04-18 16:35:39 jdbc[113]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "MEMBERS" not found (this database is empty); SQL statement:
+select member0_.member_number as member_n1_0_, member0_.last_login_date_time as last_log2_0_, member0_.member_email as member_e3_0_, member0_.member_id as member_i4_0_, member0_.member_password as member_p5_0_, member0_.role_id as role_id6_0_, member0_.state_id as state_id7_0_ from Members member0_ where member0_.member_id=? [42104-214]
+2024-04-23 16:55:11 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ROLES" not found (this database is empty); SQL statement:
+select roles0_.role_id as role_id1_1_0_, roles0_.role_name as role_nam2_1_0_ from roles roles0_ where roles0_.role_id=? [42104-214]
