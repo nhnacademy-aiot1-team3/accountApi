@@ -22,7 +22,7 @@ import java.util.List;
 /**
  * NotificationService 구현체
  * @author jihyeon
- * @version 1.0.0
+ * @version 1.0.1
  */
 @Slf4j
 @Service
@@ -46,7 +46,6 @@ public class NotificationServiceImpl implements NotificationService {
                 .contents(notification.getContents())
                 .date(notification.getDate())
                 .memberId(notification.getMember().getMemberId())
-                .file(notification.getFile())
                 .build();
     }
 
@@ -87,7 +86,6 @@ public class NotificationServiceImpl implements NotificationService {
                 .contents(response.getContents())
                 .date(LocalDateTime.now())
                 .member(member)
-                .file(response.getFile())
                 .build();
 
         notificationRepository.save(notification);
@@ -104,7 +102,7 @@ public class NotificationServiceImpl implements NotificationService {
     public void modifyNotification(Long notificationId, ModifyNotificationRequest request, String memberId) {
         Notification notification = notificationRepository.findById(notificationId).orElseThrow(() -> new CustomException(ErrorCode.NOTIFICATION_NOT_FOUND));
         Member member = memberRepository.findByMemberId(memberId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
-        notification.change(request.getTitle(), request.getContents(), member, request.getFile());
+        notification.change(request.getTitle(), request.getContents(), member);
 
         notificationRepository.save(notification);
     }
