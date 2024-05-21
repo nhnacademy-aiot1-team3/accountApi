@@ -1,6 +1,5 @@
 package live.databo3.account.memberOrgs.controller;
 
-import live.databo3.account.member.entity.Roles;
 import live.databo3.account.memberOrgs.dto.GetMembersByStateResponse;
 import live.databo3.account.memberOrgs.dto.GetOrgsListResponse;
 import live.databo3.account.memberOrgs.dto.GetOrgsWithoutMemberResponse;
@@ -25,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = MemberOrgsController.class)
 @AutoConfigureMockMvc
-public class MemberOrgsControllerTest {
+class MemberOrgsControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -64,7 +63,7 @@ public class MemberOrgsControllerTest {
 
     @Test
     @DisplayName("member를 제외한 조직 리스트 가져오기")
-    void getOrganizatioinsWithoutMember() throws Exception {
+    void getOrganizationsWithoutMember() throws Exception {
         GetOrgsWithoutMemberResponse response1 = GetOrgsWithoutMemberResponse.builder()
                 .organizationId(1)
                 .organizationName("nhn 김해")
@@ -77,7 +76,8 @@ public class MemberOrgsControllerTest {
 
         given(memberOrgsService.getOrganizationsWithoutMember(any())).willReturn(responseList);
 
-        mockMvc.perform(get("/api/account/organizations/members-without/admin"))
+        mockMvc.perform(get("/api/account/organizations/members-without/me")
+                        .header("X-USER-ID", "testId"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].organizationId").value(1))
                 .andExpect(jsonPath("$[1].organizationId").value(2))
@@ -88,8 +88,7 @@ public class MemberOrgsControllerTest {
 
     @Test
     @DisplayName("member가 해당하는 조직들을 가져오는 method")
-    void getOrganizatioinsByMember() throws Exception {
-
+    void getOrganizationsByMember() throws Exception {
         GetOrgsListResponse response1 = GetOrgsListResponse.builder()
                 .roleName("ROLE_OWNER")
                 .state(1)
@@ -107,7 +106,8 @@ public class MemberOrgsControllerTest {
 
         given(memberOrgsService.getOrganizations(any())).willReturn(responseList);
 
-        mockMvc.perform(get("/api/account/organizations/members/admin"))
+        mockMvc.perform(get("/api/account/organizations/members/me")
+                        .header("X-USER-ID", "testId"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].roleName").exists())
                 .andExpect(jsonPath("$[1].roleName").exists())
