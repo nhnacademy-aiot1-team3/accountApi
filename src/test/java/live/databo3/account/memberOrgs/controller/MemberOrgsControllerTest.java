@@ -106,6 +106,40 @@ class MemberOrgsControllerTest {
 
         given(memberOrgsService.getOrganizations(any())).willReturn(responseList);
 
+        mockMvc.perform(get("/api/account/organizations/members/testId"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].roleName").exists())
+                .andExpect(jsonPath("$[1].roleName").exists())
+                .andExpect(jsonPath("$[0].state").value(1))
+                .andExpect(jsonPath("$[1].state").value(2))
+                .andExpect(jsonPath("$[0].organizationId").value(1))
+                .andExpect(jsonPath("$[1].organizationId").value(2))
+                .andExpect(jsonPath("$[0].organizationName").value("nhn 김해"))
+                .andExpect(jsonPath("$[1].organizationName").value("nhn 서울"))
+                .andDo(print());
+    }
+
+
+    @Test
+    @DisplayName("본인이 해당하는 조직들을 가져오는 method")
+    void getOrganizationsByMe() throws Exception {
+        GetOrgsListResponse response1 = GetOrgsListResponse.builder()
+                .roleName("ROLE_OWNER")
+                .state(1)
+                .organizationId(1)
+                .organizationName("nhn 김해")
+                .build();
+        GetOrgsListResponse response2 = GetOrgsListResponse.builder()
+                .roleName("ROLE_VIEWER")
+                .state(2)
+                .organizationId(2)
+                .organizationName("nhn 서울")
+                .build();
+
+        List<GetOrgsListResponse> responseList = List.of(response1, response2);
+
+        given(memberOrgsService.getOrganizations(any())).willReturn(responseList);
+
         mockMvc.perform(get("/api/account/organizations/members/me")
                         .header("X-USER-ID", "testId"))
                 .andExpect(status().isOk())
@@ -158,7 +192,8 @@ class MemberOrgsControllerTest {
     void createMemberOrgs() throws Exception {
         doNothing().when(memberOrgsService).addMemberOrgs(any(Integer.class), any(String.class));
 
-        mockMvc.perform(post("/api/account/organizations/1/members/testId"))
+        mockMvc.perform(post("/api/account/organizations/1/members")
+                        .header("X-USER-ID", "testId"))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.message").value("success"));
     }
