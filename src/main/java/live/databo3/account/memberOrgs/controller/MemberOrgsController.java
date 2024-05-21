@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 조직 - 멤버 매핑 된 DB 관련 요청을 처리하는 Controller
  * @author jihyeon
- * @version 1.0.2
+ * @version 1.0.3
  */
 @RestController
 @RequiredArgsConstructor
@@ -66,7 +66,19 @@ public class MemberOrgsController {
     }
 
     /**
-     * 멤버가 해당되는 조직들을 가져오는 method
+     * 특정 멤버가 속한 조직들을 가져오는 method
+     * @param memberId 특정 멤버 아이디
+     * @return GetOrgsListResponse(organizationId, organizationName, state, role)의 리스트
+     * @since 1.0.3
+     */
+    @GetMapping("/organizations/members/{memberId}")
+    public ResponseEntity<List<GetOrgsListResponse>> getOrganizationsByMember(@PathVariable String memberId) {
+        List<GetOrgsListResponse> organizationList = memberOrgsService.getOrganizations(memberId);
+        return ResponseEntity.ok(organizationList);
+    }
+
+    /**
+     * 본인이 속한 조직들을 가져오는 method
      * @param memberId 멤버 아이디
      * @return GetOrgsListResponse(organizationId, organizationName, state, role)의 리스트
      * @since 1.0.0
