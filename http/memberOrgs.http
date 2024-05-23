@@ -4,12 +4,14 @@ Content-Type: application/json
 
 ### 멤버가 속한 조직 제외한 나머지 조직 리스트 들고 오기
 GET localhost:8090/api/account/organizations/members-without/me
-X-USER-ID: testId2
-
+X-USER-ID: testId33
 
 ### 멤버가 속한 조직 리스트 들고 오기
+GET localhost:8090/api/account/organizations/members/testId2
+
+### 본인이 속한 조직 리스트 들고 오기
 GET localhost:8090/api/account/organizations/members/me
-X-USER-ID: testId2
+X-USER-ID: test
 
 ### 특정 조직에서 state와 role에 따라 멤버 들고오기
 GET localhost:8090/api/account/organizations/1/members/state?state=2&role=ROLE_OWNER
@@ -17,7 +19,7 @@ GET localhost:8090/api/account/organizations/1/members/state?state=2&role=ROLE_O
 ### 추가
 POST localhost:8090/api/account/organizations/3/members
 Content-Type: application/json
-X-USER-ID: testId3
+X-USER-ID: testId4
 
 ### state 수정
 PUT localhost:8090/api/account/organizations/3/members/testId2?state=2

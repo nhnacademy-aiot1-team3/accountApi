@@ -99,7 +99,11 @@ class OrganizationServiceTest {
     @Test
     @DisplayName("조직 추가 성공")
     void postOrgsSuccess(){
-        OrgsRequest orgsRequest = OrgsRequest.builder().build();
+        OrgsRequest orgsRequest = OrgsRequest.builder()
+                .organizationName("nhn 김해")
+                .gatewaySn("gatewaySn")
+                .controllerSn("controllerSn")
+                .build();
 
         Optional<Organization> organizationOptional = Optional.empty();
         when(organizationRepository.findByOrganizationName(any())).thenReturn(organizationOptional);
@@ -112,7 +116,10 @@ class OrganizationServiceTest {
     @Test
     @DisplayName("조직 추가 실패 - 이미 있는 이름")
     void postOrgsFail(){
-        OrgsRequest orgsRequest = OrgsRequest.builder().build();
+        OrgsRequest orgsRequest = OrgsRequest.builder()
+                .organizationName("nhn 김해")
+                .gatewaySn("gateway")
+                .controllerSn("controller").build();
 
         Organization organization = Organization.builder()
                 .organizationId(1)
@@ -130,7 +137,31 @@ class OrganizationServiceTest {
             Assertions.assertEquals(e.getClass(), CustomException.class);
         }
         verify(organizationRepository, times(0)).save(any());
+    }
+    @Test
+    @DisplayName("조직 추가 실패 - 이미 있는 이름(띄어쓰기만 다른 경우)")
+    void postOrgsFail2(){
+        OrgsRequest orgsRequest = OrgsRequest.builder()
+                .organizationName("nhn     김해")
+                .gatewaySn("gateway")
+                .controllerSn("controller").build();
 
+        Organization organization = Organization.builder()
+                .organizationId(1)
+                .organizationName("nhn 김해")
+                .gatewaySn("ddd")
+                .controllerSn("eeee")
+                .build();
+
+        when(organizationRepository.findByOrganizationName(any())).thenReturn(Optional.of(organization));
+
+        try{
+            organizationService.addOrganization(orgsRequest);
+        } catch (Exception e) {
+            Assertions.assertEquals(e.getMessage(), "이미 존재하는 조직입니다");
+            Assertions.assertEquals(e.getClass(), CustomException.class);
+        }
+        verify(organizationRepository, times(0)).save(any());
     }
 
     @Test
@@ -173,13 +204,45 @@ class OrganizationServiceTest {
 
     @Test
     @DisplayName("조직 이름 수정 실패 - 이미 사용중인 이름")
-    void modifyOrganizationFail2(){
+    void modifyOrganizationFail3(){
         ModifyOrgsRequest request = ModifyOrgsRequest.builder()
                 .organizationName("nhn 김해").build();
 
         Organization organization1 = Organization.builder()
                 .organizationId(1)
                 .organizationName("nhn 김해")
+                .gatewaySn("gatewaySn")
+                .controllerSn("controllerSn")
+                .build();
+
+        Organization organization2 = Organization.builder()
+                .organizationId(2)
+                .organizationName("nhn 김해")
+                .gatewaySn("gatewaySn")
+                .controllerSn("controllerSn")
+                .build();
+
+        when(organizationRepository.findById(any(Integer.class))).thenReturn(Optional.of(organization1));
+        when(organizationRepository.findByOrganizationName(any())).thenReturn(Optional.of(organization2));
+
+        try{
+            organizationService.modifyOrganization(1,request);
+        } catch (Exception e) {
+            Assertions.assertEquals(e.getMessage(), "이미 존재하는 조직입니다");
+            Assertions.assertEquals(e.getClass(), CustomException.class);
+        }
+        verify(organizationRepository,times(0)).save(any());
+    }
+
+    @Test
+    @DisplayName("조직 이름 수정 실패 - 이미 사용중인 이름(띄어쓰기만 다른 경우)")
+    void modifyOrganizationFail2(){
+        ModifyOrgsRequest request = ModifyOrgsRequest.builder()
+                .organizationName("nhn 김해").build();
+
+        Organization organization1 = Organization.builder()
+                .organizationId(1)
+                .organizationName("nhn    김해")
                 .gatewaySn("gatewaySn")
                 .controllerSn("controllerSn")
                 .build();
