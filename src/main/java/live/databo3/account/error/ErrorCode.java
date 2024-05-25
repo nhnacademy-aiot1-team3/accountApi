@@ -22,7 +22,8 @@ public enum ErrorCode {
     ORGANIZATION_NOT_FOUND(404, "조회한 조직이 없습니다"),
     MEMBERORG_NOT_FOUND(404, "해당 조직에 멤버가 없습니다"),
     NOTIFICATION_NOT_FOUND(404, "조회한 공지사항을 찾을 수 없습니다"),
-    INVALID_REQUEST_PARAMETER(404,"요청 정보가 올바르지 않습니다");
+    INVALID_REQUEST_PARAMETER(404,"요청 정보가 올바르지 않습니다"),
+    DASHBOARD_NOT_FOUND(404, "화면 설정이 없습니다.");
 
     private final int code;
     private final String message;
