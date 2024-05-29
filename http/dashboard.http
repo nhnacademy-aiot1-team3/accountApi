@@ -1,0 +1,3 @@
+GET http://localhost:8090/api/account/config/dashboard
+Content-Type: application/json
+X-USER-ID: owner

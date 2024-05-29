@@ -14,6 +14,7 @@ import live.databo3.account.notification.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class NotificationServiceImpl implements NotificationService {
      * @since 1.0.0
      */
     @Override
+    @Transactional
     public List<GetNotificationListResponse> getNotificiations() {
         List<Notification> notificationList = notificationRepository.findAll();
         List<GetNotificationListResponse> listResponses = new ArrayList<>();
@@ -78,6 +80,7 @@ public class NotificationServiceImpl implements NotificationService {
      * @since 1.0.0
      */
     @Override
+    @Transactional
     public void addNotification(AddNotificationRequest response, String memberId) {
         Member member = memberRepository.findByMemberId(memberId).orElseThrow(()-> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         log.info("localdatetime:{}", LocalDateTime.now());
@@ -99,11 +102,13 @@ public class NotificationServiceImpl implements NotificationService {
      * @since 1.0.0
      */
     @Override
+    @Transactional
     public void modifyNotification(Long notificationId, ModifyNotificationRequest request, String memberId) {
         Notification notification = notificationRepository.findById(notificationId).orElseThrow(() -> new CustomException(ErrorCode.NOTIFICATION_NOT_FOUND));
         Member member = memberRepository.findByMemberId(memberId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         notification.change(request.getTitle(), request.getContents(), member);
-
+        log.info("notificationId Before : {}", notificationId);
+        log.info("notificationId After : {}", notification.getNotificationId());
         notificationRepository.save(notification);
     }
 
@@ -113,6 +118,7 @@ public class NotificationServiceImpl implements NotificationService {
      * @since 1.0.0
      */
     @Override
+    @Transactional
     public void deleteNotification(Long notificationId) {
         Notification notification = notificationRepository.findById(notificationId).orElseThrow(() -> new CustomException(ErrorCode.NOTIFICATION_NOT_FOUND));
         notificationRepository.delete(notification);

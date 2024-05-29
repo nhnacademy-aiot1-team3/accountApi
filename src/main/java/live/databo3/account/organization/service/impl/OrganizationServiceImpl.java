@@ -41,6 +41,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      * @since 1.0.0
      */
     @Override
+    @Transactional
     public void addOrganization(OrgsRequest request) {
         String name = request.getOrganizationName().replaceFirst(" ", "-").trim();
         name = name.replaceAll(" ", "").replace("-", " ");
@@ -89,6 +90,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      * @return GetOrgResponse(id, name, gateway SerialNumber, controller SerialNumber)
      */
     @Override
+    @Transactional
     public GetOrgsResponse getOrganization(Integer organizationId) {
         Optional<Organization> organizationOptional = organizationRepository.findById(organizationId);
         if (organizationOptional.isEmpty()) {
@@ -111,6 +113,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      * @since 1.0.1
      */
     @Override
+    @Transactional
     public void modifyOrganization(Integer organizationId, ModifyOrgsRequest request) {
         Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND));
 
@@ -150,6 +153,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      * @param request        PutGatewayOrControllerDto(gateway SerialNumber, controller SerialNumber)
      */
     @Override
+    @Transactional
     public void putSerialNumber(Integer organizationId, PutGatewayOrControllerDto request) {
         Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND));
 
@@ -168,6 +172,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      * @param organizationId 특정 조직의 id
      */
     @Override
+    @Transactional
     public void deleteGatewaySn(Integer organizationId) {
         Optional<Organization> organizationOptional = organizationRepository.findById(organizationId);
         if (organizationOptional.isEmpty()) {
@@ -183,6 +188,7 @@ public class OrganizationServiceImpl implements OrganizationService {
      * @param organizationId 특정 조직의 id
      */
     @Override
+    @Transactional
     public void deleteControllerSn(Integer organizationId) {
         Optional<Organization> organizationOptional = organizationRepository.findById(organizationId);
         if (organizationOptional.isEmpty()) {

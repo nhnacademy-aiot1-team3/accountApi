@@ -16,6 +16,7 @@ import live.databo3.account.organization.repository.OrganizationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,7 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
      * @since 1.0.0
      */
     @Override
+    @Transactional
     public Integer booleanMemberOrgs(Integer organizationId, String memberId) {
         Optional<Member> memberOptional = memberRepository.findByMemberId(memberId);
         if(memberOptional.isEmpty()) {
@@ -68,6 +70,7 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
      * @since 1.0.0
      */
     @Override
+    @Transactional
     public List<GetOrgsWithoutMemberResponse> getOrganizationsWithoutMember(String memberId) {
         memberRepository.findByMemberId(memberId).orElseThrow(()->new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
@@ -103,6 +106,7 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
      * @since 1.0.0
      */
     @Override
+    @Transactional
     public List<GetOrgsListResponse> getOrganizations(String memberId) {
         memberRepository.findByMemberId(memberId).orElseThrow(()->new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
@@ -130,6 +134,7 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
      * @since 1.0.0
      */
     @Override
+    @Transactional
     public List<GetMembersByStateResponse> getMemberListByState(Integer organizationId, Integer state, String stringRole) {
         Roles.ROLES role = null;
         for(Roles.ROLES roles : Roles.ROLES.values()) {
@@ -164,6 +169,7 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
      * @since 1.0.0
      */
     @Override
+    @Transactional
     public void addMemberOrgs(Integer organizationId, String memberId) {
         Member member = memberRepository.findByMemberId(memberId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND));
@@ -188,6 +194,7 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
      * @since 1.0.0
      */
     @Override
+    @Transactional
     public void modifyState(Integer organizationId, String memberId, Integer state) {
         memberRepository.findByMemberId(memberId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
         organizationRepository.findById(organizationId).orElseThrow(() -> new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND));
@@ -205,6 +212,7 @@ public class MemberOrgsServiceImpl implements MemberOrgsService {
      * @since 1.0.0
      */
     @Override
+    @Transactional
     public void deleteMemberOrgs(Integer organizationId, String memberId) {
         organizationRepository.findById(organizationId).orElseThrow(() -> new CustomException(ErrorCode.ORGANIZATION_NOT_FOUND));
         memberRepository.findByMemberId(memberId).orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
