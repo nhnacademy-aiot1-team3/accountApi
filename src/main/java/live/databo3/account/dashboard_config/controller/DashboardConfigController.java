@@ -48,7 +48,7 @@ public class DashboardConfigController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping
+    @PostMapping("/delete")
     public ResponseEntity<Void> deleteDashboardConfigs(@RequestBody List<DeleteDashboardConfigRequest> requests) {
         dashboardConfigService.deleteDashboardConfigs(requests);
         return ResponseEntity.ok().build();
