@@ -67,4 +67,11 @@ public class DashboardConfigServiceImpl implements DashboardConfigService {
         }
         dashboardConfigRepository.deleteById(configId);
     }
+
+    @Transactional
+    public void deleteDashboardConfigs(List<DeleteDashboardConfigRequest> requests) {
+        for (DeleteDashboardConfigRequest request : requests) {
+            dashboardConfigRepository.deleteById(request.getConfigId());
+        }
+    }
 }

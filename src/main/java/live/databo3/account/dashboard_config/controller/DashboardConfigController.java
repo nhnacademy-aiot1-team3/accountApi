@@ -1,6 +1,7 @@
 package live.databo3.account.dashboard_config.controller;
 
 import live.databo3.account.dashboard_config.dto.DashboardConfigResponse;
+import live.databo3.account.dashboard_config.dto.DeleteDashboardConfigRequest;
 import live.databo3.account.dashboard_config.dto.ModifyDashboardConfigRequest;
 import live.databo3.account.dashboard_config.dto.RegisterDashboardConfigRequest;
 import live.databo3.account.dashboard_config.service.DashboardConfigService;
@@ -44,6 +45,12 @@ public class DashboardConfigController {
     @DeleteMapping("/{configId}")
     public ResponseEntity<Void> deleteDashboardConfig(@PathVariable Long configId) {
         dashboardConfigService.deleteDashboardConfig(configId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteDashboardConfigs(@RequestBody List<DeleteDashboardConfigRequest> requests) {
+        dashboardConfigService.deleteDashboardConfigs(requests);
+        return ResponseEntity.ok().build();
     }
 }
