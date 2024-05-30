@@ -33,7 +33,7 @@ public class DashboardConfigController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping
+    @PostMapping("/modify")
     public ResponseEntity<HashMap<String, String>> modifyDashboardConfig(@RequestBody List<ModifyDashboardConfigRequest> requests) {
         dashboardConfigService.modifyDashboardConfig(requests);
 
