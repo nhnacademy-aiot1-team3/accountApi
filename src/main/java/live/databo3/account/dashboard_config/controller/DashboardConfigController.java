@@ -45,12 +45,12 @@ public class DashboardConfigController {
     @DeleteMapping("/{configId}")
     public ResponseEntity<Void> deleteDashboardConfig(@PathVariable Long configId) {
         dashboardConfigService.deleteDashboardConfig(configId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping
     public ResponseEntity<Void> deleteDashboardConfigs(@RequestBody List<DeleteDashboardConfigRequest> requests) {
         dashboardConfigService.deleteDashboardConfigs(requests);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.ok().build();
     }
 }
