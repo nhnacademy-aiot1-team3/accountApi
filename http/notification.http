@@ -1,0 +1,32 @@
+### 모든 Notification 들고오기
+GET localhost:8090/api/account/notifications
+
+### 특정 notification 들고오기
+GET localhost:8090/api/account/notifications/6
+
+### notification 생성
+POST localhost:8090/api/account/notifications
+Content-Type: application/json
+Accept: application/json
+X-USER-ID: admin
+
+{
+  "title": "ㅇㅇㅇㅇ",
+  "content": "DDDDD",
+  "file": null
+}
+
+### notification 수정
+PUT localhost:8090/api/account/notifications/2
+Content-Type: application/json
+Accept: application/json
+X-USER-ID: admin
+
+{
+  "title": "",
+  "content": "",
+  "file": null
+}
+
+### notification 삭제
+DELETE localhost:8090/api/account/notifications/2

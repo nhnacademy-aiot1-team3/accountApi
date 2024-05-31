@@ -15,7 +15,7 @@ import java.util.Optional;
  * @author insub
  * @version 1.0.0
  */
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long>,MemberRepositoryCustom {
 
     /**
      * 데이터베이스에 존재하는지 조회하는 메서드

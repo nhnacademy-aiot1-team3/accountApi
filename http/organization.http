@@ -29,7 +29,7 @@ Accept: application/json
 }
 
 ### 조직 삭제
-DELETE localhost:8090/api/account/organizations/16
+DELETE localhost:8090/api/account/organizations/2
 
 ### gatewaySn 수정
 PUT localhost:8090/api/account/organizations/22/gatewayAndController
